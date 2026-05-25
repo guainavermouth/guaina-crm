@@ -54,44 +54,42 @@ export default function KanbanPage() {
 
   return (
     <div>
-      {/* Page header + filters */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Tablero</h1>
-          <p className="text-sm text-slate-400 mt-0.5">
-            Vista Kanban del pipeline de ventas
-          </p>
-        </div>
+      {/* Page header */}
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold text-slate-900">Tablero</h1>
+        <p className="text-sm text-slate-400 mt-0.5">
+          Vista Kanban del pipeline de ventas
+        </p>
+      </div>
 
-        {/* Responsable filter pills */}
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider mr-1">
-            Responsable:
-          </span>
+      {/* Responsable filter pills */}
+      <div className="flex items-center gap-2 mb-6 flex-wrap">
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider mr-1">
+          Responsable:
+        </span>
+        <button
+          onClick={() => setFilterResponsable('')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            filterResponsable === ''
+              ? 'bg-slate-900 text-white shadow-sm'
+              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+          }`}
+        >
+          Todos
+        </button>
+        {RESPONSABLES.map((r) => (
           <button
-            onClick={() => setFilterResponsable('')}
+            key={r}
+            onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-              filterResponsable === ''
-                ? 'bg-slate-900 text-white shadow-sm'
+              filterResponsable === r
+                ? 'bg-[#AA422F] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
             }`}
           >
-            Todos
+            {r}
           </button>
-          {RESPONSABLES.map((r) => (
-            <button
-              key={r}
-              onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                filterResponsable === r
-                  ? 'bg-[#AA422F] text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-              }`}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
+        ))}
       </div>
 
       {loading ? (
