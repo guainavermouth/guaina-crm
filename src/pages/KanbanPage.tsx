@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Lead } from '../types'
+import { RESPONSABLES } from '../types'
 import KanbanBoard from '../components/KanbanBoard'
 
 export default function KanbanPage() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [loading, setLoading] = useState(true)
+  const [filterResponsable, setFilterResponsable] = useState('')
 
   const fetchLeads = useCallback(async () => {
     setLoading(true)
@@ -46,14 +48,50 @@ export default function KanbanPage() {
     )
   }
 
+  const filteredLeads = filterResponsable
+    ? leads.filter((l) => l.responsable === filterResponsable)
+    : leads
+
   return (
     <div>
-      {/* Page header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Tablero</h1>
-        <p className="text-sm text-slate-400 mt-0.5">
-          Vista Kanban del pipeline de ventas
-        </p>
+      {/* Page header + filters */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Tablero</h1>
+          <p className="text-sm text-slate-400 mt-0.5">
+            Vista Kanban del pipeline de ventas
+          </p>
+        </div>
+
+        {/* Responsable filter pills */}
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider mr-1">
+            Responsable:
+          </span>
+          <button
+            onClick={() => setFilterResponsable('')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              filterResponsable === ''
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }`}
+          >
+            Todos
+          </button>
+          {RESPONSABLES.map((r) => (
+            <button
+              key={r}
+              onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                filterResponsable === r
+                  ? 'bg-[#AA422F] text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              }`}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading ? (
@@ -67,7 +105,7 @@ export default function KanbanPage() {
           </div>
         </div>
       ) : (
-        <KanbanBoard leads={leads} onStatusChange={handleStatusChange} />
+        <KanbanBoard leads={filteredLeads} onStatusChange={handleStatusChange} />
       )}
     </div>
   )
