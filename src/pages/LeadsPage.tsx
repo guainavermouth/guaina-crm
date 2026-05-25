@@ -66,6 +66,18 @@ export default function LeadsPage() {
     )
   }
 
+  const handleDeleteLead = async (id: string, nombre: string) => {
+    const { error } = await supabase.from('leads').delete().eq('id', id)
+
+    if (error) {
+      console.error('Error al eliminar lead:', error)
+      return
+    }
+
+    setLeads((prev) => prev.filter((lead) => lead.id !== id))
+    console.log(`Lead eliminado: ${nombre}`)
+  }
+
   // Apply filters
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch =
@@ -114,6 +126,7 @@ export default function LeadsPage() {
       <LeadTable
         leads={filteredLeads}
         onUpdate={handleUpdateLead}
+        onDelete={handleDeleteLead}
         loading={loading}
       />
 
