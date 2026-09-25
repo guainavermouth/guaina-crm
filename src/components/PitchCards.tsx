@@ -16,13 +16,14 @@ const pitches: Pitch[] = [
     placeholderName: '',
     text: `Hola, cómo va?
 
-Les escribo porque nos gusta mucho la selección de productos que tienen y creemos que nuestro vermut, Guaina, va muy bien con la propuesta de ustedes.
+Les presento Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo).
 
-Es un vermut tipo Torino elaborado en Mendoza con base de Malbec de Agrelo. Lo creamos en familia, junto a mi hermana Fernanda Martino (de Martino Wines), a partir de una idea simple: queríamos un vermut rico para compartir en nuestras tardes de juegos de cartas. Buscamos que sea muy fresco, cítrico y con un amargor elegante, ideal para acompañar las picadas.
+- Historia: nació en una mesa familiar de cartas. Queríamos el vermut que nosotros mismos disfrutábamos en esas tardes.
+- Lo elaboramos junto a Fernanda Martino (Martino Wines). El nombre lo sugirió nuestra abuela: "guaina" = chica de campo.
+- Perfil fresco, cítrico y equilibrado, con amargor elegante.
+- Ideal para picadas, tardeo y góndola.
 
-La botella es de 750ml con tapa rosca, y pensamos un diseño de etiqueta limpio y minimalista. Es una primera partida limitada de 4.960 botellas numeradas.
-
-Si les interesa la propuesta, nos encantaría hacerles llegar una botella de muestra para que lo prueben con el equipo.
+Si les interesa, acercamos una muestra.
 
 Saludos!`,
   },
@@ -33,13 +34,14 @@ Saludos!`,
     placeholderName: '',
     text: `Hola, cómo están?
 
-Les escribimos para presentarles Guaina, un vermut artesanal tipo Torino (17% vol.) elaborado en Mendoza con base de Malbec de Agrelo.
+Les presentamos Guaina, vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
 
-El desarrollo técnico lo lideró mi hermana Fernanda en Martino Wines, buscando un perfil fresco, cítrico y muy equilibrado. Por su base de Malbec, tiene una tonalidad granate profundo y un perfil que va muy bien tanto para servir clásico (con hielo, soda y una rodaja de naranja) como para usar de base en Negronis suaves o cócteles de autor.
+- Historia: surgió de una mesa familiar de cartas. Buscábamos un vermut fresco para compartir sin vueltas.
+- Lo hacemos con Fernanda Martino (Martino Wines). El nombre lo puso nuestra abuela: "guaina" = chica de campo.
+- Se sirve fácil: hielo, soda y naranja. También va bien en Negronis suaves.
+- Etiqueta limpia, pensada para la barra.
 
-Cuidamos mucho el diseño de la etiqueta para que acompañe la estética de la barra, y trabajamos en partidas chicas (esta primera es de 4.960 botellas numeradas).
-
-Nos gustaría enviarles una botella para que el equipo de barra lo conozca y lo pruebe. Si les interesa, avísennos y les coordinamos la entrega.
+Si les interesa, coordinamos una muestra para el equipo.
 
 Saludos!`,
   },
@@ -50,15 +52,14 @@ Saludos!`,
     placeholderName: '[Nombre]',
     text: `Hola [Nombre], cómo va?
 
-Te escribo para presentarte Guaina, un vermut artesanal tipo Torino elaborado en Mendoza con base de Malbec de Agrelo. Creemos que por su perfil y diseño puede ser una muy buena incorporación para tu portfolio de marcas de autor.
+Te presento Guaina, vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
 
-Es un proyecto que desarrollamos en familia junto a mi hermana, Fernanda Martino (directora de Martino Wines), lo que nos da un soporte de producción y de bodega sumamente sólido. Esta primera partida es de 4.960 botellas numeradas (750ml, 17% vol.).
+- Historia: nació en una mesa familiar de cartas. Queríamos crear el vermut que nosotros mismos tomábamos.
+- Lo elaboramos con Fernanda Martino (Martino Wines). El nombre lo sugirió nuestra abuela: "guaina" = chica de campo.
+- Perfil fresco, cítrico y equilibrado. Foco en vinotecas boutique, almacenes gourmet y gastronomía joven.
+- Comercial: margen ~38,5%, promo de lanzamiento 10+1 y bonificaciones por recompra.
 
-Buscamos posicionarnos principalmente en vinotecas boutique, almacenes gourmet y gastronomía joven. Apuntamos a un vermut de tardeo, muy fresco, con entrada amable y un amargor elegante y persistente en boca.
-
-A nivel comercial, trabajamos con un esquema de margen de contribución del ~38,5% para distribuidores, promociones para el canal de 10+1 cajas en el lanzamiento y bonificaciones escalonadas por recompra.
-
-Si te interesa conocer el producto, avisame y te coordinamos el envío de una muestra junto con la ficha comercial completa.
+Si te interesa, te mando muestra + ficha comercial.
 
 Saludos,`,
   },
