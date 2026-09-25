@@ -16,12 +16,11 @@ const pitches: Pitch[] = [
     placeholderName: '',
     text: `Hola, cómo va?
 
-Les presento Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo).
+Les presento Guaina, un vermut argentino tipo Torino de Mendoza, con base de Malbec de Agrelo.
 
-- Historia: nació en una mesa familiar de cartas. Queríamos el vermut que nosotros mismos disfrutábamos en esas tardes.
-- Lo elaboramos junto a Fernanda Martino (Martino Wines). El nombre lo sugirió nuestra abuela: "guaina" = chica de campo.
-- Perfil fresco, cítrico y equilibrado, con amargor elegante.
-- Ideal para picadas, tardeo y góndola.
+Nació en una mesa familiar de cartas: queríamos el vermut que nosotros mismos disfrutábamos en esas tardes. Lo elaboramos junto a Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela: "guaina" significa chica de campo.
+
+Es fresco, cítrico y equilibrado, con un amargor elegante. Ideal para picadas, tardeo y góndola.
 
 Si les interesa, acercamos una muestra.
 
@@ -34,12 +33,11 @@ Saludos!`,
     placeholderName: '',
     text: `Hola, cómo están?
 
-Les presentamos Guaina, vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
+Les presentamos Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
 
-- Historia: surgió de una mesa familiar de cartas. Buscábamos un vermut fresco para compartir sin vueltas.
-- Lo hacemos con Fernanda Martino (Martino Wines). El nombre lo puso nuestra abuela: "guaina" = chica de campo.
-- Se sirve fácil: hielo, soda y naranja. También va bien en Negronis suaves.
-- Etiqueta limpia, pensada para la barra.
+Surgió de una mesa familiar de cartas: buscábamos un vermut fresco para compartir sin vueltas. Lo hacemos con Fernanda Martino (Martino Wines); el nombre lo puso nuestra abuela ("guaina" = chica de campo).
+
+Se sirve fácil con hielo, soda y naranja, y también va bien en Negronis suaves. Etiqueta limpia, pensada para la barra.
 
 Si les interesa, coordinamos una muestra para el equipo.
 
@@ -52,12 +50,14 @@ Saludos!`,
     placeholderName: '[Nombre]',
     text: `Hola [Nombre], cómo va?
 
-Te presento Guaina, vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
+Te presento Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
 
-- Historia: nació en una mesa familiar de cartas. Queríamos crear el vermut que nosotros mismos tomábamos.
-- Lo elaboramos con Fernanda Martino (Martino Wines). El nombre lo sugirió nuestra abuela: "guaina" = chica de campo.
-- Perfil fresco, cítrico y equilibrado. Foco en vinotecas boutique, almacenes gourmet y gastronomía joven.
-- Comercial: margen ~38,5%, promo de lanzamiento 10+1 y bonificaciones por recompra.
+Nació en una mesa familiar de cartas: queríamos crear el vermut que nosotros mismos tomábamos. Lo elaboramos con Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela ("guaina" = chica de campo). Perfil fresco, cítrico y equilibrado, pensado para vinotecas boutique, almacenes gourmet y gastronomía joven.
+
+A nivel comercial:
+- Margen de contribución ~38,5%
+- Promo de lanzamiento 10+1
+- Bonificaciones por recompra
 
 Si te interesa, te mando muestra + ficha comercial.
 
