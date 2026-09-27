@@ -14,15 +14,15 @@ const pitches: Pitch[] = [
     title: 'Almacenes Boutique y Delis',
     subtitle: 'Ideal para tiendas de productos gourmet y delicatessen',
     placeholderName: '',
-    text: `Hola, cómo va?
+    text: `Buenas! Cómo están?
 
-Les presento Guaina, un vermut argentino tipo Torino de Mendoza, con base de Malbec de Agrelo.
-
-Nació en una mesa familiar de cartas: queríamos el vermut que nosotros mismos disfrutábamos en esas tardes. Lo elaboramos junto a Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela: "guaina" significa chica de campo.
+Les queríamos presentar Guaina, un vermut argentino tipo Torino de Mendoza, con base de Malbec de Agrelo.
 
 Es fresco, cítrico y equilibrado, con un amargor elegante. Ideal para picadas, tardeo y góndola.
 
-Si les interesa, acercamos una muestra.
+Nació en una mesa familiar de cartas: queríamos el vermut que nosotros mismos disfrutábamos en esas tardes. Lo elaboramos junto a Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela: "guaina" significa chica de campo.
+
+Nos gustaría que lo conozcan. Si les interesa, les acercamos una muestra.
 
 Saludos!`,
   },
@@ -31,15 +31,15 @@ Saludos!`,
     title: 'Wine Bars y Vermuterías/Bares',
     subtitle: 'Para bares de vinos, vermuterías y cocktail bars',
     placeholderName: '',
-    text: `Hola, cómo están?
+    text: `Buenas! Cómo están?
 
-Les presentamos Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
+Les queríamos presentar Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
 
-Surgió de una mesa familiar de cartas: buscábamos un vermut fresco para compartir sin vueltas. Lo hacemos con Fernanda Martino (Martino Wines); el nombre lo puso nuestra abuela ("guaina" = chica de campo).
+Es fresco, cítrico y equilibrado, con un amargor elegante. Se sirve fácil con hielo, soda y naranja, y también va bien en Negronis suaves.
 
-Se sirve fácil con hielo, soda y naranja, y también va bien en Negronis suaves. Etiqueta limpia, pensada para la barra.
+Nació en una mesa familiar de cartas: buscábamos un vermut fresco para compartir sin vueltas. Lo hacemos con Fernanda Martino (Martino Wines); el nombre lo puso nuestra abuela ("guaina" = chica de campo).
 
-Si les interesa, coordinamos una muestra para el equipo.
+Nos gustaría que el equipo de barra lo conozca. Si les interesa, les acercamos una muestra.
 
 Saludos!`,
   },
@@ -48,18 +48,20 @@ Saludos!`,
     title: 'Distribuidores Boutique',
     subtitle: 'Para distribuidores y representantes comerciales',
     placeholderName: '[Nombre]',
-    text: `Hola [Nombre], cómo va?
+    text: `Buenas [Nombre]! Cómo va?
 
-Te presento Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
+Te quería presentar Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
 
-Nació en una mesa familiar de cartas: queríamos crear el vermut que nosotros mismos tomábamos. Lo elaboramos con Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela ("guaina" = chica de campo). Perfil fresco, cítrico y equilibrado, pensado para vinotecas boutique, almacenes gourmet y gastronomía joven.
+Es fresco, cítrico y equilibrado, con un amargor elegante. Pensado para vinotecas boutique, almacenes gourmet y gastronomía joven.
+
+Nació en una mesa familiar de cartas: queríamos crear el vermut que nosotros mismos tomábamos. Lo elaboramos con Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela ("guaina" = chica de campo).
 
 A nivel comercial:
 - Margen de contribución ~38,5%
 - Promo de lanzamiento 10+1
 - Bonificaciones por recompra
 
-Si te interesa, te mando muestra + ficha comercial.
+Nos gustaría que lo conozcas. Si te interesa, te acerco una muestra + ficha comercial.
 
 Saludos,`,
   },
