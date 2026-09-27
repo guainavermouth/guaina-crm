@@ -45,6 +45,23 @@ Saludos!`,
   },
   {
     id: 3,
+    title: 'Restaurantes',
+    subtitle: 'Para sumar Guaina a la carta de aperitivos',
+    placeholderName: '',
+    text: `Buenas! Cómo están?
+
+Les queríamos presentar Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
+
+Es fresco, cítrico y equilibrado, con un amargor elegante. Funciona muy bien como aperitivo antes de comer, con hielo, soda y naranja, y acompaña quesos, fiambres y entradas.
+
+Nace de una mesa familiar: queríamos un vermut fresco para compartir alrededor de la comida.
+
+Nos encantaría que lo prueben y ver si puede sumarse a su carta. Si les interesa, les acercamos una muestra.
+
+Saludos!`,
+  },
+  {
+    id: 4,
     title: 'Distribuidores Boutique',
     subtitle: 'Para distribuidores y representantes comerciales',
     placeholderName: '[Nombre]',
@@ -120,7 +137,7 @@ export default function PitchCards() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {pitches.map((pitch) => (
           <div key={pitch.id} className="card-base flex flex-col">
             {/* Card header */}
