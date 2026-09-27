@@ -14,7 +14,7 @@ interface FilterBarProps {
 
 function SearchIcon() {
   return (
-    <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
     </svg>
   )
@@ -29,7 +29,7 @@ function PlusIcon() {
 }
 
 const selectClasses =
-  'bg-slate-50 text-sm text-slate-600 rounded-xl px-3 py-2.5 outline-none border-0 appearance-none cursor-pointer hover:bg-slate-100 transition-colors focus:ring-2 focus:ring-terracota/20'
+  'bg-canvas text-sm text-ink/80 rounded-xl px-3 py-2.5 outline-none border border-transparent appearance-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus:ring-2 focus:ring-terracota/20'
 
 export default function FilterBar({
   search,
@@ -43,9 +43,8 @@ export default function FilterBar({
   onAddLead,
 }: FilterBarProps) {
   return (
-    <div className="card-base p-4 mb-6">
+    <div className="card-base p-3.5">
       <div className="flex flex-wrap items-center gap-3">
-        {/* Search */}
         <div className="relative flex-1 min-w-[200px]">
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <SearchIcon />
@@ -55,7 +54,7 @@ export default function FilterBar({
             placeholder="Buscar leads..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-slate-50 text-sm text-slate-600 rounded-xl pl-10 pr-4 py-2.5 outline-none border-0 placeholder:text-slate-300 focus:ring-2 focus:ring-terracota/20 transition-colors"
+            className="w-full bg-canvas text-sm text-ink/80 rounded-xl pl-10 pr-4 py-2.5 outline-none border border-transparent placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20 transition-colors"
           />
         </div>
 

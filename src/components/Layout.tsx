@@ -56,15 +56,19 @@ export default function Layout({ children }: LayoutProps) {
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
-      {/* Logo */}
-      <div className="px-6 py-8">
-        <h1 className="text-2xl">
-          <span className="font-extrabold text-terracota">Guaina</span>
-          <span className="font-light text-slate-400 ml-1.5">CRM</span>
-        </h1>
+      <div className="px-5 pt-7 pb-6">
+        <div className="flex items-center gap-3">
+          <img
+            src="/logo.png"
+            alt="Guaina"
+            className="h-8 w-auto object-contain"
+          />
+          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/35">
+            CRM
+          </span>
+        </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 px-3">
         <ul className="space-y-1">
           {navItems.map((item) => (
@@ -74,10 +78,10 @@ export default function Layout({ children }: LayoutProps) {
                 end={item.to === '/'}
                 onClick={() => setSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
                     isActive
-                      ? 'text-terracota bg-terracota/5 border-l-[3px] border-terracota'
-                      : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50 border-l-[3px] border-transparent'
+                      ? 'text-white bg-white/10'
+                      : 'text-white/55 hover:text-white hover:bg-white/[0.06]'
                   }`
                 }
               >
@@ -89,40 +93,38 @@ export default function Layout({ children }: LayoutProps) {
         </ul>
       </nav>
 
-      {/* Footer */}
-      <div className="px-6 py-6">
-        <p className="text-[10px] text-slate-300 font-medium tracking-wider uppercase">
-          Guaina Vermouth © 2025
+      <div className="px-5 py-6 border-t border-white/8">
+        <p className="text-[10px] text-white/30 font-medium tracking-wider uppercase">
+          Guaina Vermouth © 2026
         </p>
       </div>
     </div>
   )
 
   return (
-    <div className="flex min-h-screen bg-[#F9FAFB]">
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-white border-r border-slate-100 fixed inset-y-0 left-0 z-30">
+    <div className="flex h-[100dvh] overflow-hidden bg-canvas">
+      <aside className="hidden lg:flex lg:flex-col lg:w-60 bg-ink border-r border-white/5 fixed inset-y-0 left-0 z-30">
         {sidebarContent}
       </aside>
 
-      {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Mobile Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-100 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-60 bg-ink border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:hidden ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="absolute top-4 right-4">
           <button
+            type="button"
+            aria-label="Cerrar menú"
             onClick={() => setSidebarOpen(false)}
-            className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
+            className="p-2 text-white/50 hover:text-white rounded-lg cursor-pointer"
           >
             <CloseIcon />
           </button>
@@ -130,24 +132,21 @@ export default function Layout({ children }: LayoutProps) {
         {sidebarContent}
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 lg:ml-64">
-        {/* Mobile header */}
-        <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-slate-100">
+      <main className="flex-1 lg:ml-60 min-h-0 flex flex-col overflow-hidden">
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-ink shrink-0">
           <button
+            type="button"
+            aria-label="Abrir menú"
             onClick={() => setSidebarOpen(true)}
-            className="p-2 text-slate-500 hover:text-slate-700 rounded-lg hover:bg-slate-50"
+            className="p-2 text-white/70 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer"
           >
             <MenuIcon />
           </button>
-          <h1 className="text-lg">
-            <span className="font-extrabold text-terracota">Guaina</span>
-            <span className="font-light text-slate-400 ml-1">CRM</span>
-          </h1>
+          <img src="/logo.png" alt="Guaina" className="h-7 w-auto object-contain" />
           <div className="w-10" />
         </div>
 
-        <div className="p-4 md:p-6 lg:p-8">
+        <div className="flex-1 min-h-0 flex flex-col p-4 md:p-6 lg:p-7">
           {children}
         </div>
       </main>

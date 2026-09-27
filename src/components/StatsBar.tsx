@@ -18,23 +18,21 @@ export default function StatsBar({ leads }: StatsBarProps) {
   const totalLeads = leads.length
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 mb-6">
-      {/* Total card */}
-      <div className="card-base p-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5">
+      <div className="card-base px-3.5 py-3">
         <p className="table-header mb-1">Total</p>
-        <p className="text-2xl font-bold text-slate-900">{totalLeads}</p>
+        <p className="text-xl font-bold text-ink">{totalLeads}</p>
       </div>
 
-      {/* Status cards */}
       {STATUSES.map((status) => {
         const count = leads.filter((l) => l.status === status).length
         return (
-          <div key={status} className="card-base p-4">
+          <div key={status} className="card-base px-3.5 py-3">
             <div className="flex items-center gap-1.5 mb-1">
               <span className={`w-2 h-2 rounded-full ${statusDotColors[status]}`} />
-              <p className="table-header">{status}</p>
+              <p className="table-header truncate">{status}</p>
             </div>
-            <p className="text-2xl font-bold text-slate-900">{count}</p>
+            <p className="text-xl font-bold text-ink">{count}</p>
           </div>
         )
       })}

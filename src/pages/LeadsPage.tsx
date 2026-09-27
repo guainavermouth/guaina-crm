@@ -11,7 +11,6 @@ export default function LeadsPage() {
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
 
-  // Filters
   const [search, setSearch] = useState('')
   const [filterCategoria, setFilterCategoria] = useState('')
   const [filterResponsable, setFilterResponsable] = useState('')
@@ -78,7 +77,6 @@ export default function LeadsPage() {
     console.log(`Lead eliminado: ${nombre}`)
   }
 
-  // Apply filters
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch =
       !search ||
@@ -97,40 +95,41 @@ export default function LeadsPage() {
   })
 
   return (
-    <div>
-      {/* Page header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Leads</h1>
-        <p className="text-sm text-slate-400 mt-0.5">
+    <div className="flex flex-col flex-1 min-h-0 gap-4">
+      <div className="shrink-0">
+        <h1 className="text-2xl font-bold text-ink tracking-tight">Leads</h1>
+        <p className="text-sm text-muted mt-0.5">
           Gestión de contactos comerciales de Guaina Vermouth
         </p>
       </div>
 
-      {/* Stats */}
-      <StatsBar leads={leads} />
+      <div className="shrink-0">
+        <StatsBar leads={leads} />
+      </div>
 
-      {/* Filters */}
-      <FilterBar
-        search={search}
-        onSearchChange={setSearch}
-        categoria={filterCategoria}
-        onCategoriaChange={setFilterCategoria}
-        responsable={filterResponsable}
-        onResponsableChange={setFilterResponsable}
-        status={filterStatus}
-        onStatusChange={setFilterStatus}
-        onAddLead={() => setModalOpen(true)}
-      />
+      <div className="shrink-0">
+        <FilterBar
+          search={search}
+          onSearchChange={setSearch}
+          categoria={filterCategoria}
+          onCategoriaChange={setFilterCategoria}
+          responsable={filterResponsable}
+          onResponsableChange={setFilterResponsable}
+          status={filterStatus}
+          onStatusChange={setFilterStatus}
+          onAddLead={() => setModalOpen(true)}
+        />
+      </div>
 
-      {/* Table */}
-      <LeadTable
-        leads={filteredLeads}
-        onUpdate={handleUpdateLead}
-        onDelete={handleDeleteLead}
-        loading={loading}
-      />
+      <div className="flex-1 min-h-0">
+        <LeadTable
+          leads={filteredLeads}
+          onUpdate={handleUpdateLead}
+          onDelete={handleDeleteLead}
+          loading={loading}
+        />
+      </div>
 
-      {/* Modal */}
       <LeadModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

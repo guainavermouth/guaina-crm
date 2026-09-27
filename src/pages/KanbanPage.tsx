@@ -53,38 +53,38 @@ export default function KanbanPage() {
     : leads
 
   return (
-    <div>
-      {/* Page header */}
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Tablero</h1>
-        <p className="text-sm text-slate-400 mt-0.5">
+    <div className="flex flex-col flex-1 min-h-0 gap-4">
+      <div className="shrink-0">
+        <h1 className="text-2xl font-bold text-ink tracking-tight">Tablero</h1>
+        <p className="text-sm text-muted mt-0.5">
           Vista Kanban del pipeline de ventas
         </p>
       </div>
 
-      {/* Responsable filter pills */}
-      <div className="flex items-center gap-2 mb-6 flex-wrap">
-        <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider mr-1">
+      <div className="flex items-center gap-2 flex-wrap shrink-0">
+        <span className="text-[10px] font-bold text-muted uppercase tracking-wider mr-1">
           Responsable:
         </span>
         <button
+          type="button"
           onClick={() => setFilterResponsable('')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterResponsable === ''
-              ? 'bg-slate-900 text-white shadow-sm'
-              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              ? 'bg-ink text-white'
+              : 'bg-white text-muted border border-line hover:bg-canvas'
           }`}
         >
           Todos
         </button>
         {RESPONSABLES.map((r) => (
           <button
+            type="button"
             key={r}
             onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               filterResponsable === r
-                ? 'bg-[#AA422F] text-white shadow-sm'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                ? 'bg-terracota text-white'
+                : 'bg-white text-muted border border-line hover:bg-canvas'
             }`}
           >
             {r}
@@ -92,19 +92,21 @@ export default function KanbanPage() {
         ))}
       </div>
 
-      {loading ? (
-        <div className="card-base p-12 flex items-center justify-center">
-          <div className="flex items-center gap-3 text-slate-400">
-            <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-            </svg>
-            <span className="text-sm font-medium">Cargando tablero...</span>
+      <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
+        {loading ? (
+          <div className="card-base p-12 flex items-center justify-center">
+            <div className="flex items-center gap-3 text-muted">
+              <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              <span className="text-sm font-medium">Cargando tablero...</span>
+            </div>
           </div>
-        </div>
-      ) : (
-        <KanbanBoard leads={filteredLeads} onStatusChange={handleStatusChange} />
-      )}
+        ) : (
+          <KanbanBoard leads={filteredLeads} onStatusChange={handleStatusChange} />
+        )}
+      </div>
     </div>
   )
 }

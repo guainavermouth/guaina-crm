@@ -162,8 +162,8 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
 
   if (loading) {
     return (
-      <div className="card-base p-12 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-slate-400">
+      <div className="card-base h-full p-12 flex items-center justify-center">
+        <div className="flex items-center gap-3 text-muted">
           <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -176,8 +176,8 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
 
   if (leads.length === 0) {
     return (
-      <div className="card-base p-12 flex flex-col items-center justify-center text-slate-400">
-        <svg className="w-12 h-12 mb-3 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+      <div className="card-base h-full p-12 flex flex-col items-center justify-center text-muted">
+        <svg className="w-12 h-12 mb-3 text-line" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
         </svg>
         <p className="text-sm font-medium">No hay leads para mostrar</p>
@@ -187,16 +187,16 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
   }
 
   return (
-    <div className="card-base overflow-hidden">
-      <div className="overflow-x-auto custom-scrollbar">
+    <div className="card-base h-full min-h-0 flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
         <table className="w-full min-w-[1000px]">
-          <thead>
-            <tr className="bg-slate-50/50">
+          <thead className="sticky top-0 z-10">
+            <tr className="bg-[#faf8f5]">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`table-header text-left px-4 py-3 sticky top-0 bg-slate-50/80 backdrop-blur-sm ${
-                    col.sortable ? 'cursor-pointer hover:text-slate-600 select-none' : ''
+                  className={`table-header text-left px-4 py-3 border-b border-line bg-[#faf8f5] ${
+                    col.sortable ? 'cursor-pointer hover:text-ink select-none' : ''
                   }`}
                   onClick={() => col.sortable && handleSort(col.key)}
                 >
@@ -208,13 +208,12 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
                   </span>
                 </th>
               ))}
-              <th className="table-header text-left px-2 py-3 sticky top-0 bg-slate-50/80 backdrop-blur-sm w-10">
-              </th>
+              <th className="table-header text-left px-2 py-3 border-b border-line bg-[#faf8f5] w-10" />
             </tr>
           </thead>
           <tbody>
             {sortedLeads.map((lead) => (
-              <tr key={lead.id} className="hover:bg-slate-50/50 transition-colors group">
+              <tr key={lead.id} className="hover:bg-[#faf8f5]/80 transition-colors group">
                 {columns.map((col) => {
                   const isEditing =
                     editing?.id === lead.id && editing?.field === col.key
@@ -246,12 +245,12 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
                           {col.key === 'status' ? (
                             <StatusBadge status={cellValue} />
                           ) : col.key === 'redes_sociales' && cellValue ? (
-                            <span className="text-[#AA422F] text-sm truncate block max-w-[150px]">
+                            <span className="text-terracota text-sm truncate block max-w-[150px]">
                               {cellValue}
                             </span>
                           ) : (
                             <span className="text-sm truncate block max-w-[200px]">
-                              {cellValue || <span className="text-slate-300">—</span>}
+                              {cellValue || <span className="text-muted/40">—</span>}
                             </span>
                           )}
                         </div>
@@ -259,28 +258,31 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
                     </td>
                   )
                 })}
-                {/* Delete button */}
                 <td className="px-2 py-2 w-10">
                   {confirmDelete === lead.id ? (
                     <div className="flex items-center gap-1">
                       <button
+                        type="button"
                         onClick={() => { onDelete(lead.id, lead.nombre); setConfirmDelete(null) }}
-                        className="text-[10px] font-bold text-white bg-red-500 hover:bg-red-600 rounded px-1.5 py-0.5 transition-colors"
+                        className="text-[10px] font-bold text-white bg-red-500 hover:bg-red-600 rounded px-1.5 py-0.5 transition-colors cursor-pointer"
                       >
                         Sí
                       </button>
                       <button
+                        type="button"
                         onClick={() => setConfirmDelete(null)}
-                        className="text-[10px] font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 rounded px-1.5 py-0.5 transition-colors"
+                        className="text-[10px] font-bold text-muted bg-canvas hover:bg-line rounded px-1.5 py-0.5 transition-colors cursor-pointer"
                       >
                         No
                       </button>
                     </div>
                   ) : (
                     <button
+                      type="button"
                       onClick={() => setConfirmDelete(lead.id)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-slate-300 hover:text-red-500 rounded-lg hover:bg-red-50"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-muted/50 hover:text-red-500 rounded-lg hover:bg-red-50 cursor-pointer"
                       title="Eliminar lead"
+                      aria-label={`Eliminar ${lead.nombre}`}
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />

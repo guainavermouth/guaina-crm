@@ -3,17 +3,15 @@ import PitchCards from '../components/PitchCards'
 
 export default function PitchesPage() {
   return (
-    <div>
-      {/* Page header */}
+    <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Pitches</h1>
-        <p className="text-sm text-slate-400 mt-0.5">
+        <h1 className="text-2xl font-bold text-ink tracking-tight">Pitches</h1>
+        <p className="text-sm text-muted mt-0.5">
           Mensajes de presentación y materiales comerciales
         </p>
       </div>
 
-      {/* Ficha Técnica Card */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-8">
+      <div className="card-base p-6 mb-8">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-[#AA422F]/10 flex items-center justify-center flex-shrink-0">
             <DocumentTextIcon className="w-6 h-6 text-[#AA422F]" />

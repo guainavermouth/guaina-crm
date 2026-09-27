@@ -3,62 +3,77 @@
 @theme {
   --color-terracota: #AA422F;
   --color-crema: #EBE7D9;
+  --color-ink: #14110F;
+  --color-ink-soft: #1C1714;
+  --color-surface: #FFFFFF;
+  --color-canvas: #F4F1EC;
+  --color-muted: #8A8178;
+  --color-line: #E6E0D8;
   --color-verde-bosque: #3F513C;
   --color-verde-salvia: #B3B99B;
   --color-rosa-malva: #CEBCBD;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-/* Base styles */
 *,
 *::before,
 *::after {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+}
+
+html,
+body,
+#root {
+  height: 100%;
 }
 
 body {
-  background-color: #F9FAFB;
-  color: #1e293b;
+  background-color: var(--color-canvas);
+  color: #1f1a17;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Card base */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .card-base {
-  background-color: white;
+  background-color: var(--color-surface);
   border-radius: 1rem;
-  border: 1px solid rgb(241 245 249);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--color-line);
+  box-shadow: 0 1px 2px 0 rgb(20 17 15 / 0.04);
 }
 
-.card-base:hover {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-
-/* Table header */
 .table-header {
   font-size: 10px;
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #94a3b8;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
 }
 
-/* Table cell */
 .table-cell {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
-  color: #334155;
-  border-bottom: 1px solid rgb(248 250 252);
+  color: #2a2420;
+  border-bottom: 1px solid rgb(230 224 216 / 0.7);
 }
 
-/* Primary button */
 .btn-primary {
-  background-color: #0f172a;
+  background-color: var(--color-terracota);
   color: white;
   border-radius: 0.75rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0.55rem 1.15rem;
   font-size: 0.875rem;
   font-weight: 600;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, transform 0.1s ease;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -66,18 +81,26 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #1e293b;
+  background-color: #933828;
 }
 
-/* Secondary button */
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid rgb(170 66 47 / 0.35);
+  outline-offset: 2px;
+}
+
 .btn-secondary {
   background-color: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-line);
   border-radius: 0.75rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0.55rem 1.15rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #334155;
+  color: #2a2420;
   transition: background-color 0.15s ease;
   cursor: pointer;
   display: inline-flex;
@@ -86,10 +109,9 @@ body {
 }
 
 .btn-secondary:hover {
-  background-color: #f8fafc;
+  background-color: #faf8f5;
 }
 
-/* Status badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -101,8 +123,8 @@ body {
 }
 
 .badge-pendiente {
-  background-color: #f1f5f9;
-  color: #64748b;
+  background-color: #f0ebe4;
+  color: #6b625a;
 }
 
 .badge-contactado {
@@ -130,10 +152,14 @@ body {
   color: #dc2626;
 }
 
-/* Custom scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d9d1c7 transparent;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -141,15 +167,14 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #F1F5F9;
-  border-radius: 3px;
+  background-color: #d9d1c7;
+  border-radius: 999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #cbd5e1;
+  background-color: #c4b9ac;
 }
 
-/* Editable cell */
 .editable-cell {
   cursor: pointer;
   border-radius: 0.375rem;
@@ -159,27 +184,25 @@ body {
 }
 
 .editable-cell:hover {
-  background-color: #f1f5f9;
+  background-color: #f3eee7;
 }
 
-/* Modal overlay */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  background-color: rgba(20, 17, 15, 0.45);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 50;
 }
 
-/* Toast notification */
 .toast {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background-color: #0f172a;
+  background-color: var(--color-ink);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
