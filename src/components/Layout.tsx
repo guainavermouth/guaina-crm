@@ -63,7 +63,7 @@ export default function Layout({ children }: LayoutProps) {
             alt="Guaina"
             className="h-8 w-auto object-contain"
           />
-          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/35">
+          <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-muted">
             CRM
           </span>
         </div>
@@ -80,8 +80,8 @@ export default function Layout({ children }: LayoutProps) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
                     isActive
-                      ? 'text-white bg-white/10'
-                      : 'text-white/55 hover:text-white hover:bg-white/[0.06]'
+                      ? 'text-terracota bg-terracota/8'
+                      : 'text-muted hover:text-ink hover:bg-canvas'
                   }`
                 }
               >
@@ -93,8 +93,8 @@ export default function Layout({ children }: LayoutProps) {
         </ul>
       </nav>
 
-      <div className="px-5 py-6 border-t border-white/8">
-        <p className="text-[10px] text-white/30 font-medium tracking-wider uppercase">
+      <div className="px-5 py-6 border-t border-line">
+        <p className="text-[10px] text-muted/70 font-medium tracking-wider uppercase">
           Guaina Vermouth © 2026
         </p>
       </div>
@@ -103,19 +103,19 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex h-[100dvh] overflow-hidden bg-canvas">
-      <aside className="hidden lg:flex lg:flex-col lg:w-60 bg-ink border-r border-white/5 fixed inset-y-0 left-0 z-30">
+      <aside className="hidden lg:flex lg:flex-col lg:w-60 bg-white border-r border-line fixed inset-y-0 left-0 z-30">
         {sidebarContent}
       </aside>
 
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-ink/25 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-60 bg-ink border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-60 bg-white border-r border-line transform transition-transform duration-300 ease-in-out lg:hidden ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -124,7 +124,7 @@ export default function Layout({ children }: LayoutProps) {
             type="button"
             aria-label="Cerrar menú"
             onClick={() => setSidebarOpen(false)}
-            className="p-2 text-white/50 hover:text-white rounded-lg cursor-pointer"
+            className="p-2 text-muted hover:text-ink rounded-lg cursor-pointer"
           >
             <CloseIcon />
           </button>
@@ -133,12 +133,12 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       <main className="flex-1 lg:ml-60 min-h-0 flex flex-col overflow-hidden">
-        <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-ink shrink-0">
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-line shrink-0">
           <button
             type="button"
             aria-label="Abrir menú"
             onClick={() => setSidebarOpen(true)}
-            className="p-2 text-white/70 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer"
+            className="p-2 text-muted hover:text-ink rounded-lg hover:bg-canvas cursor-pointer"
           >
             <MenuIcon />
           </button>
