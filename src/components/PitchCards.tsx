@@ -20,7 +20,7 @@ Les queríamos presentar Guaina, un vermut argentino tipo Torino de Mendoza, con
 
 Es fresco, cítrico y equilibrado, con un amargor elegante. Ideal para picadas, tardeo y góndola.
 
-Nació en una mesa familiar de cartas: queríamos el vermut que nosotros mismos disfrutábamos en esas tardes. Lo elaboramos junto a Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela: "guaina" significa chica de campo.
+Nace de una mesa familiar: queríamos el vermut fresco que nosotros mismos disfrutábamos en esas tardes.
 
 Nos gustaría que lo conozcan. Si les interesa, les acercamos una muestra.
 
@@ -37,7 +37,7 @@ Les queríamos presentar Guaina, un vermut argentino tipo Torino (17% vol.) de M
 
 Es fresco, cítrico y equilibrado, con un amargor elegante. Se sirve fácil con hielo, soda y naranja, y también va bien en Negronis suaves.
 
-Nació en una mesa familiar de cartas: buscábamos un vermut fresco para compartir sin vueltas. Lo hacemos con Fernanda Martino (Martino Wines); el nombre lo puso nuestra abuela ("guaina" = chica de campo).
+Nace de una mesa familiar: buscábamos un vermut fresco para compartir sin vueltas.
 
 Nos gustaría que el equipo de barra lo conozca. Si les interesa, les acercamos una muestra.
 
@@ -54,7 +54,7 @@ Te quería presentar Guaina, un vermut argentino tipo Torino de Mendoza (base Ma
 
 Es fresco, cítrico y equilibrado, con un amargor elegante. Pensado para vinotecas boutique, almacenes gourmet y gastronomía joven.
 
-Nació en una mesa familiar de cartas: queríamos crear el vermut que nosotros mismos tomábamos. Lo elaboramos con Fernanda Martino (Martino Wines), y el nombre lo sugirió nuestra abuela ("guaina" = chica de campo).
+Nace de una mesa familiar: queríamos crear el vermut fresco que nosotros mismos tomábamos.
 
 A nivel comercial:
 - Margen de contribución ~38,5%
