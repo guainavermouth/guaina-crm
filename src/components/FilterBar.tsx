@@ -1,4 +1,4 @@
-import { CATEGORIAS, RESPONSABLES, STATUSES } from '../types'
+import { CATEGORIAS, RESPONSABLES, STATUSES, RELEVANCIAS } from '../types'
 
 interface FilterBarProps {
   search: string
@@ -9,6 +9,8 @@ interface FilterBarProps {
   onResponsableChange: (value: string) => void
   status: string
   onStatusChange: (value: string) => void
+  relevancia: string
+  onRelevanciaChange: (value: string) => void
   onAddLead: () => void
 }
 
@@ -31,6 +33,12 @@ function PlusIcon() {
 const selectClasses =
   'bg-canvas text-sm text-ink/80 rounded-xl px-3 py-2.5 outline-none border border-transparent appearance-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus:ring-2 focus:ring-terracota/20'
 
+const relevanciaLabels: Record<string, string> = {
+  alta: 'Alta',
+  media: 'Media',
+  baja: 'Baja',
+}
+
 export default function FilterBar({
   search,
   onSearchChange,
@@ -40,6 +48,8 @@ export default function FilterBar({
   onResponsableChange,
   status,
   onStatusChange,
+  relevancia,
+  onRelevanciaChange,
   onAddLead,
 }: FilterBarProps) {
   return (
@@ -58,7 +68,6 @@ export default function FilterBar({
           />
         </div>
 
-        {/* Categoría */}
         <select
           value={categoria}
           onChange={(e) => onCategoriaChange(e.target.value)}
@@ -72,7 +81,19 @@ export default function FilterBar({
           ))}
         </select>
 
-        {/* Responsable */}
+        <select
+          value={relevancia}
+          onChange={(e) => onRelevanciaChange(e.target.value)}
+          className={selectClasses}
+        >
+          <option value="">Todas las relevancias</option>
+          {RELEVANCIAS.map((r) => (
+            <option key={r} value={r}>
+              {relevanciaLabels[r]}
+            </option>
+          ))}
+        </select>
+
         <select
           value={responsable}
           onChange={(e) => onResponsableChange(e.target.value)}
@@ -86,7 +107,6 @@ export default function FilterBar({
           ))}
         </select>
 
-        {/* Status */}
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
@@ -100,8 +120,7 @@ export default function FilterBar({
           ))}
         </select>
 
-        {/* Add Lead button */}
-        <button onClick={onAddLead} className="btn-primary">
+        <button type="button" onClick={onAddLead} className="btn-primary">
           <PlusIcon />
           <span className="hidden sm:inline">Agregar Lead</span>
         </button>

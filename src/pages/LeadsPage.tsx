@@ -15,6 +15,7 @@ export default function LeadsPage() {
   const [filterCategoria, setFilterCategoria] = useState('')
   const [filterResponsable, setFilterResponsable] = useState('')
   const [filterStatus, setFilterStatus] = useState('')
+  const [filterRelevancia, setFilterRelevancia] = useState('')
 
   const fetchLeads = useCallback(async () => {
     setLoading(true)
@@ -48,9 +49,14 @@ export default function LeadsPage() {
   }
 
   const handleUpdateLead = async (id: string, field: keyof Lead, value: string) => {
+    const nextValue =
+      field === 'relevancia' || field === 'responsable'
+        ? value || null
+        : value
+
     const { error } = await supabase
       .from('leads')
-      .update({ [field]: value, updated_at: new Date().toISOString() })
+      .update({ [field]: nextValue, updated_at: new Date().toISOString() })
       .eq('id', id)
 
     if (error) {
@@ -60,7 +66,7 @@ export default function LeadsPage() {
 
     setLeads((prev) =>
       prev.map((lead) =>
-        lead.id === id ? { ...lead, [field]: value, updated_at: new Date().toISOString() } : lead
+        lead.id === id ? { ...lead, [field]: nextValue, updated_at: new Date().toISOString() } : lead
       )
     )
   }
@@ -90,8 +96,9 @@ export default function LeadsPage() {
     const matchesCategoria = !filterCategoria || lead.categoria === filterCategoria
     const matchesResponsable = !filterResponsable || lead.responsable === filterResponsable
     const matchesStatus = !filterStatus || lead.status === filterStatus
+    const matchesRelevancia = !filterRelevancia || lead.relevancia === filterRelevancia
 
-    return matchesSearch && matchesCategoria && matchesResponsable && matchesStatus
+    return matchesSearch && matchesCategoria && matchesResponsable && matchesStatus && matchesRelevancia
   })
 
   return (
@@ -117,6 +124,8 @@ export default function LeadsPage() {
           onResponsableChange={setFilterResponsable}
           status={filterStatus}
           onStatusChange={setFilterStatus}
+          relevancia={filterRelevancia}
+          onRelevanciaChange={setFilterRelevancia}
           onAddLead={() => setModalOpen(true)}
         />
       </div>

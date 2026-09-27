@@ -152,6 +152,21 @@ body {
   color: #dc2626;
 }
 
+.badge-relevancia-alta {
+  background-color: #f3e4df;
+  color: #aa422f;
+}
+
+.badge-relevancia-media {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge-relevancia-baja {
+  background-color: #f0ebe4;
+  color: #6b625a;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #d9d1c7 transparent;

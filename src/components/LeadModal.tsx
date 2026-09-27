@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { LeadInsert } from '../types'
-import { CATEGORIAS, RESPONSABLES, STATUSES } from '../types'
+import { CATEGORIAS, RESPONSABLES, STATUSES, RELEVANCIAS } from '../types'
 
 interface LeadModalProps {
   isOpen: boolean
@@ -23,6 +23,7 @@ const emptyLead: LeadInsert = {
   descripcion: '',
   responsable: null,
   status: 'Pendiente',
+  relevancia: null,
   notas: '',
 }
 
@@ -175,6 +176,23 @@ export default function LeadModal({ isOpen, onClose, onSave }: LeadModalProps) {
                 {RESPONSABLES.map((r) => (
                   <option key={r} value={r}>
                     {r}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Relevancia */}
+            <div>
+              <label className={labelClasses}>Relevancia</label>
+              <select
+                value={form.relevancia || ''}
+                onChange={(e) => handleChange('relevancia', e.target.value || null)}
+                className={inputClasses}
+              >
+                <option value="">Sin definir</option>
+                {RELEVANCIAS.map((r) => (
+                  <option key={r} value={r}>
+                    {r.charAt(0).toUpperCase() + r.slice(1)}
                   </option>
                 ))}
               </select>

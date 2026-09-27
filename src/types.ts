@@ -9,6 +9,7 @@ export interface Lead {
   descripcion: string
   responsable: string | null
   status: string
+  relevancia: string | null
   notas: string
   created_at: string
   updated_at: string
@@ -38,6 +39,9 @@ export const STATUSES = [
   'Descartado',
 ] as const
 
+export const RELEVANCIAS = ['alta', 'media', 'baja'] as const
+
 export type Categoria = (typeof CATEGORIAS)[number]
 export type Responsable = (typeof RESPONSABLES)[number]
 export type Status = (typeof STATUSES)[number]
+export type Relevancia = (typeof RELEVANCIAS)[number]

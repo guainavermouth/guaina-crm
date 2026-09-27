@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Lead } from '../types'
-import { CATEGORIAS, RESPONSABLES, STATUSES } from '../types'
+import { CATEGORIAS, RESPONSABLES, STATUSES, RELEVANCIAS } from '../types'
 import StatusBadge from './StatusBadge'
+import RelevanciaBadge from './RelevanciaBadge'
 
 interface LeadTableProps {
   leads: Lead[]
@@ -24,6 +25,7 @@ interface SortState {
 const columns: { key: keyof Lead; label: string; type: 'text' | 'select'; options?: readonly string[]; sortable: boolean }[] = [
   { key: 'nombre', label: 'Nombre', type: 'text', sortable: true },
   { key: 'categoria', label: 'Categoría', type: 'select', options: CATEGORIAS, sortable: true },
+  { key: 'relevancia', label: 'Relevancia', type: 'select', options: RELEVANCIAS, sortable: true },
   { key: 'redes_sociales', label: 'Redes', type: 'text', sortable: false },
   { key: 'telefono', label: 'Teléfono', type: 'text', sortable: false },
   { key: 'email', label: 'Email', type: 'text', sortable: false },
@@ -31,6 +33,8 @@ const columns: { key: keyof Lead; label: string; type: 'text' | 'select'; option
   { key: 'status', label: 'Estado', type: 'select', options: STATUSES, sortable: true },
   { key: 'notas', label: 'Notas', type: 'text', sortable: false },
 ]
+
+const relevanciaOrder: Record<string, number> = { alta: 0, media: 1, baja: 2 }
 
 function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
   return (
@@ -137,6 +141,11 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
   }
 
   const sortedLeads = [...leads].sort((a, b) => {
+    if (sort.key === 'relevancia') {
+      const aVal = relevanciaOrder[String(a.relevancia || '').toLowerCase()] ?? 99
+      const bVal = relevanciaOrder[String(b.relevancia || '').toLowerCase()] ?? 99
+      return sort.dir === 'asc' ? aVal - bVal : bVal - aVal
+    }
     const aVal = String(a[sort.key] || '').toLowerCase()
     const bVal = String(b[sort.key] || '').toLowerCase()
     const cmp = aVal.localeCompare(bVal, 'es')
@@ -228,7 +237,7 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
                             options={col.options!}
                             onSave={(val) => handleSave(lead.id, col.key, val)}
                             onCancel={handleCancel}
-                            allowEmpty={col.key === 'responsable'}
+                            allowEmpty={col.key === 'responsable' || col.key === 'relevancia'}
                           />
                         ) : (
                           <EditableInput
@@ -244,6 +253,8 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
                         >
                           {col.key === 'status' ? (
                             <StatusBadge status={cellValue} />
+                          ) : col.key === 'relevancia' ? (
+                            <RelevanciaBadge relevancia={cellValue} />
                           ) : col.key === 'redes_sociales' && cellValue ? (
                             <span className="text-terracota text-sm truncate block max-w-[150px]">
                               {cellValue}
