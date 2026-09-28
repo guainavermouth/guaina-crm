@@ -12,10 +12,10 @@ export default function LeadsPage() {
   const [modalOpen, setModalOpen] = useState(false)
 
   const [search, setSearch] = useState('')
-  const [filterCategoria, setFilterCategoria] = useState('')
-  const [filterResponsable, setFilterResponsable] = useState('')
-  const [filterStatus, setFilterStatus] = useState('')
-  const [filterRelevancia, setFilterRelevancia] = useState('')
+  const [filterCategorias, setFilterCategorias] = useState<string[]>([])
+  const [filterResponsables, setFilterResponsables] = useState<string[]>([])
+  const [filterStatuses, setFilterStatuses] = useState<string[]>([])
+  const [filterRelevancias, setFilterRelevancias] = useState<string[]>([])
 
   const fetchLeads = useCallback(async () => {
     setLoading(true)
@@ -93,10 +93,16 @@ export default function LeadsPage() {
       lead.posible_contacto?.toLowerCase().includes(search.toLowerCase()) ||
       lead.telefono?.toLowerCase().includes(search.toLowerCase())
 
-    const matchesCategoria = !filterCategoria || lead.categoria === filterCategoria
-    const matchesResponsable = !filterResponsable || lead.responsable === filterResponsable
-    const matchesStatus = !filterStatus || lead.status === filterStatus
-    const matchesRelevancia = !filterRelevancia || lead.relevancia === filterRelevancia
+    const matchesCategoria =
+      filterCategorias.length === 0 || filterCategorias.includes(lead.categoria)
+    const matchesResponsable =
+      filterResponsables.length === 0 ||
+      (!!lead.responsable && filterResponsables.includes(lead.responsable))
+    const matchesStatus =
+      filterStatuses.length === 0 || filterStatuses.includes(lead.status)
+    const matchesRelevancia =
+      filterRelevancias.length === 0 ||
+      (!!lead.relevancia && filterRelevancias.includes(lead.relevancia))
 
     return matchesSearch && matchesCategoria && matchesResponsable && matchesStatus && matchesRelevancia
   })
@@ -118,14 +124,14 @@ export default function LeadsPage() {
         <FilterBar
           search={search}
           onSearchChange={setSearch}
-          categoria={filterCategoria}
-          onCategoriaChange={setFilterCategoria}
-          responsable={filterResponsable}
-          onResponsableChange={setFilterResponsable}
-          status={filterStatus}
-          onStatusChange={setFilterStatus}
-          relevancia={filterRelevancia}
-          onRelevanciaChange={setFilterRelevancia}
+          categorias={filterCategorias}
+          onCategoriasChange={setFilterCategorias}
+          responsables={filterResponsables}
+          onResponsablesChange={setFilterResponsables}
+          statuses={filterStatuses}
+          onStatusesChange={setFilterStatuses}
+          relevancias={filterRelevancias}
+          onRelevanciasChange={setFilterRelevancias}
           onAddLead={() => setModalOpen(true)}
         />
       </div>
