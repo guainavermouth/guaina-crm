@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { PITCHES, customizePitch, type Pitch } from '../data/pitches'
+import { customizePitch, type Pitch } from '../data/pitches'
+import { usePitches } from '../hooks/usePitches'
+import EditPitchModal from './EditPitchModal'
 
 function CopyIcon() {
   return (
@@ -17,10 +19,24 @@ function CheckIcon() {
   )
 }
 
+function PencilIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"
+      />
+    </svg>
+  )
+}
+
 export default function PitchCards() {
+  const { pitches, updatePitch, restorePitch } = usePitches()
   const [names, setNames] = useState<Record<number, string>>({})
   const [toast, setToast] = useState<string | null>(null)
   const [copiedId, setCopiedId] = useState<number | null>(null)
+  const [editing, setEditing] = useState<Pitch | null>(null)
 
   useEffect(() => {
     if (toast) {
@@ -47,17 +63,28 @@ export default function PitchCards() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-        {PITCHES.map((pitch) => (
+        {pitches.map((pitch) => (
           <div key={pitch.id} className="card-base flex flex-col h-full min-h-[440px]">
             <div className="px-6 pt-6 pb-4 border-b border-slate-100">
-              <div className="flex items-start justify-between mb-2">
-                <div>
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="min-w-0">
                   <h3 className="text-base font-bold text-slate-900">{pitch.title}</h3>
                   <p className="text-xs text-slate-400 mt-0.5">{pitch.subtitle}</p>
                 </div>
-                <span className="text-[10px] font-bold text-terracota bg-terracota/5 px-2 py-1 rounded-full">
-                  #{pitch.id}
-                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setEditing(pitch)}
+                    className="p-2 rounded-lg text-muted hover:text-terracota hover:bg-terracota/5 cursor-pointer focus-visible:ring-2 focus-visible:ring-terracota/20"
+                    title="Editar pitch"
+                    aria-label={`Editar pitch ${pitch.title}`}
+                  >
+                    <PencilIcon />
+                  </button>
+                  <span className="text-[10px] font-bold text-terracota bg-terracota/5 px-2 py-1 rounded-full">
+                    #{pitch.id}
+                  </span>
+                </div>
               </div>
 
               {pitch.placeholderName && (
@@ -108,6 +135,21 @@ export default function PitchCards() {
           </div>
         ))}
       </div>
+
+      {editing && (
+        <EditPitchModal
+          pitch={editing}
+          onSave={(pitch) => {
+            updatePitch(pitch)
+            setToast('Pitch guardado')
+          }}
+          onRestore={(id) => {
+            restorePitch(id)
+            setToast('Pitch restaurado')
+          }}
+          onClose={() => setEditing(null)}
+        />
+      )}
 
       {toast && <div className="toast">{toast}</div>}
     </div>

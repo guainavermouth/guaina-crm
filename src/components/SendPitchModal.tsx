@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Lead } from '../types'
-import { PITCHES, customizePitch, suggestedPitchId } from '../data/pitches'
+import { customizePitch } from '../data/pitches'
+import { usePitches } from '../hooks/usePitches'
 import { extractInstagramUsername, instagramDmUrl } from '../lib/instagram'
 
 interface SendPitchModalProps {
@@ -9,6 +10,7 @@ interface SendPitchModalProps {
 }
 
 export default function SendPitchModal({ lead, onClose }: SendPitchModalProps) {
+  const { pitches, suggestedPitchId } = usePitches()
   const username = extractInstagramUsername(lead.redes_sociales)
   const [pitchId, setPitchId] = useState(() => suggestedPitchId(lead.categoria))
   const [contactName, setContactName] = useState(
@@ -17,7 +19,7 @@ export default function SendPitchModal({ lead, onClose }: SendPitchModalProps) {
   const [status, setStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
-  const pitch = PITCHES.find((p) => p.id === pitchId) ?? PITCHES[0]
+  const pitch = pitches.find((p) => p.id === pitchId) ?? pitches[0]
   const message = customizePitch(pitch, contactName)
 
   useEffect(() => {
@@ -89,7 +91,7 @@ export default function SendPitchModal({ lead, onClose }: SendPitchModalProps) {
               Elegí el pitch
             </p>
             <div className="space-y-1.5">
-              {PITCHES.map((p) => {
+              {pitches.map((p) => {
                 const selected = p.id === pitchId
                 const suggested = p.id === suggestedPitchId(lead.categoria)
                 return (
