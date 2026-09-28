@@ -98,8 +98,11 @@ export default function LeadsPage() {
     const matchesResponsable =
       filterResponsables.length === 0 ||
       (!!lead.responsable && filterResponsables.includes(lead.responsable))
+    // Sin filtro de estado: ocultar descartados. Si eligen estados, respetar la selección.
     const matchesStatus =
-      filterStatuses.length === 0 || filterStatuses.includes(lead.status)
+      filterStatuses.length === 0
+        ? lead.status !== 'Descartado'
+        : filterStatuses.includes(lead.status)
     const matchesRelevancia =
       filterRelevancias.length === 0 ||
       (!!lead.relevancia && filterRelevancias.includes(lead.relevancia))

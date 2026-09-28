@@ -59,7 +59,58 @@ function CheckIcon() {
   )
 }
 
-export default function SalesTools() {
+export function MaterialsSection() {
+  return (
+    <section>
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-ink tracking-tight">Herramientas</h2>
+        <p className="text-sm text-muted mt-0.5">
+          Listas de precios y ficha técnica
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        {materials.map((m) => (
+          <div key={m.id} className="card-base p-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+              <div className="w-11 h-11 rounded-xl bg-terracota/10 flex items-center justify-center shrink-0">
+                <DocumentTextIcon className="w-5 h-5 text-terracota" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-bold text-muted uppercase tracking-[0.18em] mb-1">
+                  {m.eyebrow}
+                </p>
+                <h3 className="text-base font-bold text-ink">{m.title}</h3>
+                <p className="text-sm text-muted mt-1">{m.description}</p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href={m.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-2.5 bg-white text-ink/80 border border-line rounded-xl hover:bg-canvas transition-colors flex items-center gap-2 font-semibold text-sm cursor-pointer"
+                >
+                  <EyeIcon className="w-4 h-4" />
+                  Ver
+                </a>
+                <a
+                  href={m.href}
+                  download={m.downloadName}
+                  className="px-3.5 py-2.5 bg-ink text-white rounded-xl hover:bg-ink/90 transition-colors flex items-center gap-2 font-semibold text-sm cursor-pointer"
+                >
+                  <ArrowDownTrayIcon className="w-4 h-4" />
+                  Descargar
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export function NegociacionSection() {
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
 
@@ -81,117 +132,64 @@ export default function SalesTools() {
   }
 
   return (
-    <div className="space-y-10">
-      <section>
-        <div className="mb-4">
-          <h2 className="text-lg font-bold text-ink tracking-tight">Herramientas</h2>
-          <p className="text-sm text-muted mt-0.5">
-            Listas de precios, ficha técnica y marcos de negociación por canal
-          </p>
-        </div>
+    <section>
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-ink tracking-tight">Negociación por canal</h2>
+        <p className="text-sm text-muted mt-0.5">
+          Opciones listas para copiar y usar en la charla comercial
+        </p>
+      </div>
 
-        <div className="space-y-3">
-          {materials.map((m) => (
-            <div key={m.id} className="card-base p-5">
-              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-terracota/10 flex items-center justify-center shrink-0">
-                  <DocumentTextIcon className="w-5 h-5 text-terracota" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-bold text-muted uppercase tracking-[0.18em] mb-1">
-                    {m.eyebrow}
-                  </p>
-                  <h3 className="text-base font-bold text-ink">{m.title}</h3>
-                  <p className="text-sm text-muted mt-1">{m.description}</p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <a
-                    href={m.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2.5 bg-white text-ink/80 border border-line rounded-xl hover:bg-canvas transition-colors flex items-center gap-2 font-semibold text-sm cursor-pointer"
-                  >
-                    <EyeIcon className="w-4 h-4" />
-                    Ver
-                  </a>
-                  <a
-                    href={m.href}
-                    download={m.downloadName}
-                    className="px-3.5 py-2.5 bg-ink text-white rounded-xl hover:bg-ink/90 transition-colors flex items-center gap-2 font-semibold text-sm cursor-pointer"
-                  >
-                    <ArrowDownTrayIcon className="w-4 h-4" />
-                    Descargar
-                  </a>
-                </div>
+      <div className="space-y-6">
+        {CANALES_NEGOCIACION.map((canal) => {
+          const opciones = NEGOCIACION.filter((n) => n.canal === canal)
+          return (
+            <div key={canal}>
+              <h3 className="text-[10px] font-bold text-muted uppercase tracking-[0.18em] mb-2.5">
+                {canal}
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
+                {opciones.map((op) => {
+                  const copied = copiedId === op.id
+                  return (
+                    <div key={op.id} className="card-base p-5 flex flex-col h-full">
+                      <div className="mb-2">
+                        <h4 className="text-sm font-bold text-ink">{op.titulo}</h4>
+                        <p className="text-xs text-terracota font-medium mt-0.5">{op.resumen}</p>
+                      </div>
+                      <p className="text-sm text-ink/75 leading-relaxed">{op.detalle}</p>
+                      <blockquote className="mt-3 flex-1 text-sm text-muted leading-relaxed whitespace-pre-line border-l-[3px] border-terracota/20 pl-3 py-1">
+                        {op.textoCopia}
+                      </blockquote>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(op.id, op.textoCopia)}
+                        className={`mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                          copied ? 'bg-emerald-500 text-white' : 'btn-primary'
+                        }`}
+                      >
+                        {copied ? (
+                          <>
+                            <CheckIcon />
+                            Copiado
+                          </>
+                        ) : (
+                          <>
+                            <CopyIcon />
+                            Copiar para negociar
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )
+                })}
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <div className="mb-4">
-          <h2 className="text-lg font-bold text-ink tracking-tight">Negociación por canal</h2>
-          <p className="text-sm text-muted mt-0.5">
-            Opciones listas para copiar y usar en la charla comercial
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          {CANALES_NEGOCIACION.map((canal) => {
-            const opciones = NEGOCIACION.filter((n) => n.canal === canal)
-            return (
-              <div key={canal}>
-                <h3 className="text-[10px] font-bold text-muted uppercase tracking-[0.18em] mb-2.5">
-                  {canal}
-                </h3>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                  {opciones.map((op) => {
-                    const copied = copiedId === op.id
-                    return (
-                      <div key={op.id} className="card-base p-5 flex flex-col">
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <div>
-                            <h4 className="text-sm font-bold text-ink">{op.titulo}</h4>
-                            <p className="text-xs text-terracota font-medium mt-0.5">
-                              {op.resumen}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="text-sm text-ink/75 leading-relaxed flex-1">{op.detalle}</p>
-                        <blockquote className="mt-3 text-sm text-muted leading-relaxed whitespace-pre-line border-l-[3px] border-terracota/20 pl-3 py-1">
-                          {op.textoCopia}
-                        </blockquote>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(op.id, op.textoCopia)}
-                          className={`mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                            copied ? 'bg-emerald-500 text-white' : 'btn-primary'
-                          }`}
-                        >
-                          {copied ? (
-                            <>
-                              <CheckIcon />
-                              Copiado
-                            </>
-                          ) : (
-                            <>
-                              <CopyIcon />
-                              Copiar para negociar
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </section>
+          )
+        })}
+      </div>
 
       {toast && <div className="toast">{toast}</div>}
-    </div>
+    </section>
   )
 }

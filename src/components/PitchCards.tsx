@@ -46,9 +46,9 @@ export default function PitchCards() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
         {PITCHES.map((pitch) => (
-          <div key={pitch.id} className="card-base flex flex-col">
+          <div key={pitch.id} className="card-base flex flex-col h-full min-h-[440px]">
             <div className="px-6 pt-6 pb-4 border-b border-slate-100">
               <div className="flex items-start justify-between mb-2">
                 <div>
@@ -76,13 +76,13 @@ export default function PitchCards() {
               )}
             </div>
 
-            <div className="flex-1 px-6 py-4 overflow-y-auto custom-scrollbar max-h-[400px]">
+            <div className="flex-1 min-h-[180px] px-6 py-4 overflow-y-auto custom-scrollbar">
               <blockquote className="text-sm text-slate-600 leading-relaxed whitespace-pre-line border-l-[3px] border-terracota/20 pl-4">
                 {getCustomizedText(pitch)}
               </blockquote>
             </div>
 
-            <div className="px-6 py-4 border-t border-slate-100">
+            <div className="mt-auto shrink-0 px-6 py-4 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => handleCopy(pitch)}
@@ -100,7 +100,7 @@ export default function PitchCards() {
                 ) : (
                   <>
                     <CopyIcon />
-                    Copiar Pitch
+                    Copiar mensaje
                   </>
                 )}
               </button>
