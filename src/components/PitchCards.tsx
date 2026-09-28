@@ -139,13 +139,21 @@ export default function PitchCards() {
       {editing && (
         <EditPitchModal
           pitch={editing}
-          onSave={(pitch) => {
-            updatePitch(pitch)
-            setToast('Pitch guardado')
+          onSave={async (pitch) => {
+            try {
+              await updatePitch(pitch)
+              setToast('Pitch guardado')
+            } catch {
+              setToast('Error al guardar en Supabase')
+            }
           }}
-          onRestore={(id) => {
-            restorePitch(id)
-            setToast('Pitch restaurado')
+          onRestore={async (id) => {
+            try {
+              await restorePitch(id)
+              setToast('Pitch restaurado')
+            } catch {
+              setToast('Error al restaurar')
+            }
           }}
           onClose={() => setEditing(null)}
         />

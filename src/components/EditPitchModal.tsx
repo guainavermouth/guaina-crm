@@ -4,8 +4,8 @@ import { getDefaultPitch } from '../lib/pitchesStore'
 
 interface EditPitchModalProps {
   pitch: Pitch
-  onSave: (pitch: Pitch) => void
-  onRestore: (id: number) => void
+  onSave: (pitch: Pitch) => void | Promise<void>
+  onRestore: (id: number) => void | Promise<void>
   onClose: () => void
 }
 
@@ -25,6 +25,8 @@ export default function EditPitchModal({
       subtitle !== defaults.subtitle ||
       text !== defaults.text)
 
+  const [saving, setSaving] = useState(false)
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -33,21 +35,31 @@ export default function EditPitchModal({
     return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    onSave({
-      ...pitch,
-      title: title.trim() || pitch.title,
-      subtitle: subtitle.trim(),
-      text: text.trim() || pitch.text,
-    })
-    onClose()
+    setSaving(true)
+    try {
+      await onSave({
+        ...pitch,
+        title: title.trim() || pitch.title,
+        subtitle: subtitle.trim(),
+        text: text.trim() || pitch.text,
+      })
+      onClose()
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const handleRestore = () => {
+  const handleRestore = async () => {
     if (!defaults) return
-    onRestore(pitch.id)
-    onClose()
+    setSaving(true)
+    try {
+      await onRestore(pitch.id)
+      onClose()
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -133,7 +145,7 @@ export default function EditPitchModal({
             <button
               type="button"
               onClick={handleRestore}
-              disabled={!isCustom && text === pitch.text && title === pitch.title}
+              disabled={saving || (!isCustom && text === pitch.text && title === pitch.title)}
               className="text-sm font-semibold text-muted hover:text-ink px-3 py-2.5 rounded-xl hover:bg-canvas cursor-pointer disabled:opacity-40 disabled:pointer-events-none"
             >
               Restaurar original
@@ -142,12 +154,13 @@ export default function EditPitchModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="text-sm font-semibold text-muted hover:text-ink px-3 py-2.5 rounded-xl hover:bg-canvas cursor-pointer"
+                disabled={saving}
+                className="text-sm font-semibold text-muted hover:text-ink px-3 py-2.5 rounded-xl hover:bg-canvas cursor-pointer disabled:opacity-40"
               >
                 Cancelar
               </button>
-              <button type="submit" className="btn-primary">
-                Guardar
+              <button type="submit" className="btn-primary disabled:opacity-40" disabled={saving}>
+                {saving ? 'Guardando…' : 'Guardar'}
               </button>
             </div>
           </div>
