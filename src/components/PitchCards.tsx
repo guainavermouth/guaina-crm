@@ -1,88 +1,5 @@
 import { useState, useEffect } from 'react'
-
-interface Pitch {
-  id: number
-  title: string
-  subtitle: string
-  placeholderName: string
-  text: string
-}
-
-const pitches: Pitch[] = [
-  {
-    id: 1,
-    title: 'Almacenes Boutique y Delis',
-    subtitle: 'Ideal para tiendas de productos gourmet y delicatessen',
-    placeholderName: '',
-    text: `Buenas! Cómo están?
-
-Les queríamos presentar Guaina, un vermut argentino tipo Torino de Mendoza, con base de Malbec de Agrelo.
-
-Es fresco, cítrico y equilibrado, con un amargor elegante. Ideal para picadas, tardeo y góndola.
-
-Nace de una mesa familiar: queríamos el vermut fresco que nosotros mismos disfrutábamos en esas tardes.
-
-Nos gustaría que lo conozcan. Si les interesa, les acercamos una muestra.
-
-Saludos!`,
-  },
-  {
-    id: 2,
-    title: 'Wine Bars y Vermuterías/Bares',
-    subtitle: 'Para bares de vinos, vermuterías y cocktail bars',
-    placeholderName: '',
-    text: `Buenas! Cómo están?
-
-Les queríamos presentar Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
-
-Es fresco, cítrico y equilibrado, con un amargor elegante. Se sirve fácil con hielo, soda y naranja, y también va bien en Negronis suaves.
-
-Nace de una mesa familiar: buscábamos un vermut fresco para compartir sin vueltas.
-
-Nos gustaría que el equipo de barra lo conozca. Si les interesa, les acercamos una muestra.
-
-Saludos!`,
-  },
-  {
-    id: 3,
-    title: 'Restaurantes',
-    subtitle: 'Para sumar Guaina a la carta de aperitivos',
-    placeholderName: '',
-    text: `Buenas! Cómo están?
-
-Les queríamos presentar Guaina, un vermut argentino tipo Torino (17% vol.) de Mendoza, base Malbec de Agrelo.
-
-Es fresco, cítrico y equilibrado, con un amargor elegante. Funciona muy bien como aperitivo antes de comer, con hielo, soda y naranja, y acompaña quesos, fiambres y entradas.
-
-Nace de una mesa familiar: queríamos un vermut fresco para compartir alrededor de la comida.
-
-Nos encantaría que lo prueben y ver si puede sumarse a su carta. Si les interesa, les acercamos una muestra.
-
-Saludos!`,
-  },
-  {
-    id: 4,
-    title: 'Distribuidores Boutique',
-    subtitle: 'Para distribuidores y representantes comerciales',
-    placeholderName: '[Nombre]',
-    text: `Buenas [Nombre]! Cómo va?
-
-Te quería presentar Guaina, un vermut argentino tipo Torino de Mendoza (base Malbec de Agrelo, 17% vol.).
-
-Es fresco, cítrico y equilibrado, con un amargor elegante. Pensado para vinotecas boutique, almacenes gourmet y gastronomía joven.
-
-Nace de una mesa familiar: queríamos crear el vermut fresco que nosotros mismos tomábamos.
-
-A nivel comercial:
-- Margen de contribución ~38,5%
-- Promo de lanzamiento 10+1
-- Bonificaciones por recompra
-
-Nos gustaría que lo conozcas. Si te interesa, te acerco una muestra + ficha comercial.
-
-Saludos,`,
-  },
-]
+import { PITCHES, customizePitch, type Pitch } from '../data/pitches'
 
 function CopyIcon() {
   return (
@@ -112,16 +29,8 @@ export default function PitchCards() {
     }
   }, [toast])
 
-  const getCustomizedText = (pitch: Pitch) => {
-    let text = pitch.text
-    const name = names[pitch.id]
-
-    if (pitch.placeholderName && name) {
-      text = text.replace(pitch.placeholderName, name)
-    }
-
-    return text
-  }
+  const getCustomizedText = (pitch: Pitch) =>
+    customizePitch(pitch, names[pitch.id])
 
   const handleCopy = async (pitch: Pitch) => {
     const text = getCustomizedText(pitch)
@@ -138,9 +47,8 @@ export default function PitchCards() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {pitches.map((pitch) => (
+        {PITCHES.map((pitch) => (
           <div key={pitch.id} className="card-base flex flex-col">
-            {/* Card header */}
             <div className="px-6 pt-6 pb-4 border-b border-slate-100">
               <div className="flex items-start justify-between mb-2">
                 <div>
@@ -152,7 +60,6 @@ export default function PitchCards() {
                 </span>
               </div>
 
-              {/* Name input for distribuidores pitch */}
               {pitch.placeholderName && (
                 <div className="mt-3">
                   <label className="table-header block mb-1.5">Nombre del contacto</label>
@@ -169,18 +76,17 @@ export default function PitchCards() {
               )}
             </div>
 
-            {/* Pitch text */}
             <div className="flex-1 px-6 py-4 overflow-y-auto custom-scrollbar max-h-[400px]">
               <blockquote className="text-sm text-slate-600 leading-relaxed whitespace-pre-line border-l-[3px] border-terracota/20 pl-4">
                 {getCustomizedText(pitch)}
               </blockquote>
             </div>
 
-            {/* Copy button */}
             <div className="px-6 py-4 border-t border-slate-100">
               <button
+                type="button"
                 onClick={() => handleCopy(pitch)}
-                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                   copiedId === pitch.id
                     ? 'bg-emerald-500 text-white'
                     : 'btn-primary'
@@ -203,7 +109,6 @@ export default function PitchCards() {
         ))}
       </div>
 
-      {/* Toast */}
       {toast && <div className="toast">{toast}</div>}
     </div>
   )

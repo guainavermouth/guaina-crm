@@ -8,6 +8,7 @@ export default function KanbanPage() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [loading, setLoading] = useState(true)
   const [filterResponsable, setFilterResponsable] = useState('')
+  const [searchNombre, setSearchNombre] = useState('')
 
   const fetchLeads = useCallback(async () => {
     setLoading(true)
@@ -48,9 +49,13 @@ export default function KanbanPage() {
     )
   }
 
-  const filteredLeads = filterResponsable
-    ? leads.filter((l) => l.responsable === filterResponsable)
-    : leads
+  const filteredLeads = leads.filter((l) => {
+    const matchesResponsable =
+      !filterResponsable || l.responsable === filterResponsable
+    const q = searchNombre.trim().toLowerCase()
+    const matchesNombre = !q || l.nombre.toLowerCase().includes(q)
+    return matchesResponsable && matchesNombre
+  })
 
   return (
     <div className="flex flex-col flex-1 min-h-0 gap-4">
@@ -61,35 +66,52 @@ export default function KanbanPage() {
         </p>
       </div>
 
-      <div className="flex items-center gap-2 flex-wrap shrink-0">
-        <span className="text-[10px] font-bold text-muted uppercase tracking-wider mr-1">
-          Responsable:
-        </span>
-        <button
-          type="button"
-          onClick={() => setFilterResponsable('')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-            filterResponsable === ''
-              ? 'bg-ink text-white'
-              : 'bg-white text-muted border border-line hover:bg-canvas'
-          }`}
-        >
-          Todos
-        </button>
-        {RESPONSABLES.map((r) => (
+      <div className="flex items-center gap-3 flex-wrap shrink-0">
+        <div className="relative min-w-[200px] flex-1 max-w-xs">
+          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+          </div>
+          <input
+            type="search"
+            placeholder="Buscar por nombre..."
+            value={searchNombre}
+            onChange={(e) => setSearchNombre(e.target.value)}
+            className="w-full bg-white text-sm text-ink rounded-xl pl-10 pr-3 py-2 outline-none border border-line placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-[10px] font-bold text-muted uppercase tracking-wider mr-1">
+            Responsable:
+          </span>
           <button
             type="button"
-            key={r}
-            onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
+            onClick={() => setFilterResponsable('')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-              filterResponsable === r
-                ? 'bg-terracota text-white'
+              filterResponsable === ''
+                ? 'bg-ink text-white'
                 : 'bg-white text-muted border border-line hover:bg-canvas'
             }`}
           >
-            {r}
+            Todos
           </button>
-        ))}
+          {RESPONSABLES.map((r) => (
+            <button
+              type="button"
+              key={r}
+              onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                filterResponsable === r
+                  ? 'bg-terracota text-white'
+                  : 'bg-white text-muted border border-line hover:bg-canvas'
+              }`}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
