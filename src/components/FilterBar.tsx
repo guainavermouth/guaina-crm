@@ -57,23 +57,26 @@ function MultiSelect({
   selected,
   onChange,
   formatOption,
+  open,
+  onOpenChange,
 }: {
   label: string
   options: readonly string[]
   selected: string[]
   onChange: (next: string[]) => void
   formatOption?: (value: string) => string
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }) {
-  const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!open) return
     const onPointerDown = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false)
+      if (!rootRef.current?.contains(e.target as Node)) onOpenChange(false)
     }
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') onOpenChange(false)
     }
     document.addEventListener('pointerdown', onPointerDown)
     document.addEventListener('keydown', onKeyDown)
@@ -81,7 +84,7 @@ function MultiSelect({
       document.removeEventListener('pointerdown', onPointerDown)
       document.removeEventListener('keydown', onKeyDown)
     }
-  }, [open])
+  }, [open, onOpenChange])
 
   const toggle = (value: string) => {
     if (selected.includes(value)) {
@@ -99,22 +102,22 @@ function MultiSelect({
         : `${label} (${selected.length})`
 
   return (
-    <div className="relative" ref={rootRef}>
+    <div className="relative shrink-0" ref={rootRef}>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => onOpenChange(!open)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`flex items-center gap-2 bg-canvas text-sm rounded-xl px-3 py-2.5 outline-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus-visible:ring-2 focus-visible:ring-terracota/20 shrink-0 min-h-11 sm:min-h-0 ${
+        className={`flex items-center gap-2 bg-canvas text-sm rounded-xl px-3 py-2.5 outline-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus-visible:ring-2 focus-visible:ring-terracota/20 ${
           selected.length > 0 ? 'text-ink font-medium' : 'text-ink/80'
         }`}
       >
-        <span className="max-w-[160px] truncate">{summary}</span>
+        <span className="max-w-[140px] truncate">{summary}</span>
         <ChevronIcon open={open} />
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-1.5 z-20 min-w-[220px] max-w-[min(280px,calc(100vw-2rem))] max-h-64 overflow-auto custom-scrollbar rounded-xl border border-line bg-white shadow-lg p-1.5">
+        <div className="absolute left-0 top-full mt-1.5 z-50 w-[220px] max-h-64 overflow-auto custom-scrollbar rounded-xl border border-line bg-white shadow-lg p-1.5">
           <div className="flex items-center justify-between px-2 py-1.5 mb-0.5">
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted">{label}</span>
             {selected.length > 0 && (
@@ -164,34 +167,32 @@ export default function FilterBar({
   onRelevanciasChange,
   onAddLead,
 }: FilterBarProps) {
+  const [openFilter, setOpenFilter] = useState<string | null>(null)
+
   return (
-    <div className="card-base p-3 sm:p-3.5">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1 min-w-0">
-            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <SearchIcon />
-            </div>
-            <input
-              type="text"
-              placeholder="Buscar leads..."
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full bg-canvas text-sm text-ink/80 rounded-xl pl-10 pr-4 py-2.5 outline-none border border-transparent placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20 transition-colors"
-            />
+    <div className="card-base p-3 sm:p-3.5 overflow-visible">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <div className="relative flex-1 min-w-[180px]">
+          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <SearchIcon />
           </div>
-          <button type="button" onClick={onAddLead} className="btn-primary shrink-0">
-            <PlusIcon />
-            <span className="hidden sm:inline">Agregar Lead</span>
-          </button>
+          <input
+            type="text"
+            placeholder="Buscar leads..."
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full bg-canvas text-sm text-ink/80 rounded-xl pl-10 pr-4 py-2.5 outline-none border border-transparent placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20 transition-colors"
+          />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar touch-pan-x pb-0.5 -mx-0.5 px-0.5">
+        <div className="flex flex-wrap items-center gap-2">
           <MultiSelect
             label="Categorías"
             options={CATEGORIAS}
             selected={categorias}
             onChange={onCategoriasChange}
+            open={openFilter === 'categorias'}
+            onOpenChange={(v) => setOpenFilter(v ? 'categorias' : null)}
           />
           <MultiSelect
             label="Relevancia"
@@ -199,20 +200,32 @@ export default function FilterBar({
             selected={relevancias}
             onChange={onRelevanciasChange}
             formatOption={(v) => relevanciaLabels[v] || v}
+            open={openFilter === 'relevancia'}
+            onOpenChange={(v) => setOpenFilter(v ? 'relevancia' : null)}
           />
           <MultiSelect
             label="Responsables"
             options={RESPONSABLES}
             selected={responsables}
             onChange={onResponsablesChange}
+            open={openFilter === 'responsables'}
+            onOpenChange={(v) => setOpenFilter(v ? 'responsables' : null)}
           />
           <MultiSelect
             label="Estados"
             options={STATUSES}
             selected={statuses}
             onChange={onStatusesChange}
+            open={openFilter === 'estados'}
+            onOpenChange={(v) => setOpenFilter(v ? 'estados' : null)}
           />
         </div>
+
+        <button type="button" onClick={onAddLead} className="btn-primary shrink-0 self-start sm:self-auto sm:ml-auto">
+          <PlusIcon />
+          <span className="hidden sm:inline">Agregar Lead</span>
+          <span className="sm:hidden">Agregar</span>
+        </button>
       </div>
     </div>
   )
