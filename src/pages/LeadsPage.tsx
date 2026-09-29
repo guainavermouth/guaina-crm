@@ -113,8 +113,8 @@ export default function LeadsPage() {
   return (
     <div className="flex flex-col flex-1 min-h-0 gap-4">
       <div className="shrink-0">
-        <h1 className="text-2xl font-bold text-ink tracking-tight">Leads</h1>
-        <p className="text-sm text-muted mt-0.5">
+        <h1 className="text-xl sm:text-2xl font-bold text-ink tracking-tight">Leads</h1>
+        <p className="text-sm text-muted mt-0.5 hidden sm:block">
           Gestión de contactos comerciales de Guaina Vermouth
         </p>
       </div>

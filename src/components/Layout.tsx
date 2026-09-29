@@ -146,7 +146,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="w-10" />
         </div>
 
-        <div className="flex-1 min-h-0 flex flex-col p-4 md:p-6 lg:p-7">
+        <div className="flex-1 min-h-0 flex flex-col p-3 sm:p-4 md:p-6 lg:p-7 overflow-hidden">
           {children}
         </div>
       </main>

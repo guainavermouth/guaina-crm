@@ -105,7 +105,7 @@ function MultiSelect({
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`flex items-center gap-2 bg-canvas text-sm rounded-xl px-3 py-2.5 outline-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus-visible:ring-2 focus-visible:ring-terracota/20 ${
+        className={`flex items-center gap-2 bg-canvas text-sm rounded-xl px-3 py-2.5 outline-none cursor-pointer hover:bg-[#ebe6de] transition-colors focus-visible:ring-2 focus-visible:ring-terracota/20 shrink-0 min-h-11 sm:min-h-0 ${
           selected.length > 0 ? 'text-ink font-medium' : 'text-ink/80'
         }`}
       >
@@ -114,7 +114,7 @@ function MultiSelect({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-1.5 z-20 min-w-[220px] max-h-64 overflow-auto custom-scrollbar rounded-xl border border-line bg-white shadow-lg p-1.5">
+        <div className="absolute left-0 top-full mt-1.5 z-20 min-w-[220px] max-w-[min(280px,calc(100vw-2rem))] max-h-64 overflow-auto custom-scrollbar rounded-xl border border-line bg-white shadow-lg p-1.5">
           <div className="flex items-center justify-between px-2 py-1.5 mb-0.5">
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted">{label}</span>
             {selected.length > 0 && (
@@ -165,51 +165,54 @@ export default function FilterBar({
   onAddLead,
 }: FilterBarProps) {
   return (
-    <div className="card-base p-3.5">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
-          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <SearchIcon />
+    <div className="card-base p-3 sm:p-3.5">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1 min-w-0">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <SearchIcon />
+            </div>
+            <input
+              type="text"
+              placeholder="Buscar leads..."
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-full bg-canvas text-sm text-ink/80 rounded-xl pl-10 pr-4 py-2.5 outline-none border border-transparent placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20 transition-colors"
+            />
           </div>
-          <input
-            type="text"
-            placeholder="Buscar leads..."
-            value={search}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-canvas text-sm text-ink/80 rounded-xl pl-10 pr-4 py-2.5 outline-none border border-transparent placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20 transition-colors"
-          />
+          <button type="button" onClick={onAddLead} className="btn-primary shrink-0">
+            <PlusIcon />
+            <span className="hidden sm:inline">Agregar Lead</span>
+          </button>
         </div>
 
-        <MultiSelect
-          label="Categorías"
-          options={CATEGORIAS}
-          selected={categorias}
-          onChange={onCategoriasChange}
-        />
-        <MultiSelect
-          label="Relevancia"
-          options={RELEVANCIAS}
-          selected={relevancias}
-          onChange={onRelevanciasChange}
-          formatOption={(v) => relevanciaLabels[v] || v}
-        />
-        <MultiSelect
-          label="Responsables"
-          options={RESPONSABLES}
-          selected={responsables}
-          onChange={onResponsablesChange}
-        />
-        <MultiSelect
-          label="Estados"
-          options={STATUSES}
-          selected={statuses}
-          onChange={onStatusesChange}
-        />
-
-        <button type="button" onClick={onAddLead} className="btn-primary">
-          <PlusIcon />
-          <span className="hidden sm:inline">Agregar Lead</span>
-        </button>
+        <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar touch-pan-x pb-0.5 -mx-0.5 px-0.5">
+          <MultiSelect
+            label="Categorías"
+            options={CATEGORIAS}
+            selected={categorias}
+            onChange={onCategoriasChange}
+          />
+          <MultiSelect
+            label="Relevancia"
+            options={RELEVANCIAS}
+            selected={relevancias}
+            onChange={onRelevanciasChange}
+            formatOption={(v) => relevanciaLabels[v] || v}
+          />
+          <MultiSelect
+            label="Responsables"
+            options={RESPONSABLES}
+            selected={responsables}
+            onChange={onResponsablesChange}
+          />
+          <MultiSelect
+            label="Estados"
+            options={STATUSES}
+            selected={statuses}
+            onChange={onStatusesChange}
+          />
+        </div>
       </div>
     </div>
   )

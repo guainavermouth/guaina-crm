@@ -66,8 +66,8 @@ export default function KanbanPage() {
         </p>
       </div>
 
-      <div className="flex items-center gap-3 flex-wrap shrink-0">
-        <div className="relative min-w-[200px] flex-1 max-w-xs">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-wrap shrink-0">
+        <div className="relative w-full sm:min-w-[200px] sm:flex-1 sm:max-w-xs">
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -78,18 +78,18 @@ export default function KanbanPage() {
             placeholder="Buscar por nombre..."
             value={searchNombre}
             onChange={(e) => setSearchNombre(e.target.value)}
-            className="w-full bg-white text-sm text-ink rounded-xl pl-10 pr-3 py-2 outline-none border border-line placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20"
+            className="w-full bg-white text-sm text-ink rounded-xl pl-10 pr-3 py-2.5 outline-none border border-line placeholder:text-muted/60 focus:ring-2 focus:ring-terracota/20"
           />
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10px] font-bold text-muted uppercase tracking-wider mr-1">
+        <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-0.5 -mx-1 px-1 touch-pan-x">
+          <span className="text-[10px] font-bold text-muted uppercase tracking-wider mr-1 shrink-0">
             Responsable:
           </span>
           <button
             type="button"
             onClick={() => setFilterResponsable('')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`shrink-0 px-3 py-2 min-h-11 sm:min-h-0 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               filterResponsable === ''
                 ? 'bg-ink text-white'
                 : 'bg-white text-muted border border-line hover:bg-canvas'
@@ -102,7 +102,7 @@ export default function KanbanPage() {
               type="button"
               key={r}
               onClick={() => setFilterResponsable(r === filterResponsable ? '' : r)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`shrink-0 px-3 py-2 min-h-11 sm:min-h-0 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 filterResponsable === r
                   ? 'bg-terracota text-white'
                   : 'bg-white text-muted border border-line hover:bg-canvas'
@@ -114,9 +114,9 @@ export default function KanbanPage() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
+      <div className="flex-1 min-h-0 overflow-hidden">
         {loading ? (
-          <div className="card-base p-12 flex items-center justify-center">
+          <div className="card-base h-full p-12 flex items-center justify-center">
             <div className="flex items-center gap-3 text-muted">
               <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

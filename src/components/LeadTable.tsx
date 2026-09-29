@@ -342,141 +342,161 @@ export default function LeadTable({ leads, onUpdate, onDelete, loading }: LeadTa
 
   return (
     <div className="card-base h-full min-h-0 flex flex-col overflow-hidden">
-      <div className="flex-1 min-h-0 overflow-auto custom-scrollbar">
-        <table className="w-full min-w-[1000px]">
-          <thead className="sticky top-0 z-10">
+      <div className="flex-1 min-h-0 overflow-auto custom-scrollbar overscroll-contain touch-pan-x touch-pan-y">
+        <table className="w-full min-w-[960px] border-separate border-spacing-0">
+          <thead className="sticky top-0 z-30">
             <tr className="bg-[#faf8f5]">
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  className={`table-header text-left px-4 py-3 border-b border-line bg-[#faf8f5] ${
-                    col.sortable ? 'cursor-pointer hover:text-ink select-none' : ''
-                  }`}
-                  onClick={() => col.sortable && handleSort(col.key)}
-                >
-                  <span className="flex items-center">
-                    {col.label}
-                    {col.sortable && (
-                      <SortIcon active={sort.key === col.key} dir={sort.dir} />
-                    )}
-                  </span>
-                </th>
-              ))}
-              <th className="table-header text-left px-2 py-3 border-b border-line bg-[#faf8f5] w-20" />
+              {columns.map((col) => {
+                const isNombre = col.key === 'nombre'
+                return (
+                  <th
+                    key={col.key}
+                    className={`table-header text-left px-3 sm:px-4 py-3 border-b border-line bg-[#faf8f5] ${
+                      col.sortable ? 'cursor-pointer hover:text-ink select-none' : ''
+                    } ${
+                      isNombre
+                        ? 'sticky left-0 z-40 min-w-[140px] max-w-[180px] sm:min-w-[180px] sm:max-w-[220px] shadow-[2px_0_6px_-2px_rgba(20,17,15,0.12)]'
+                        : ''
+                    }`}
+                    onClick={() => col.sortable && handleSort(col.key)}
+                  >
+                    <span className="flex items-center">
+                      {col.label}
+                      {col.sortable && (
+                        <SortIcon active={sort.key === col.key} dir={sort.dir} />
+                      )}
+                    </span>
+                  </th>
+                )
+              })}
+              <th className="table-header text-left px-2 py-3 border-b border-line bg-[#faf8f5] w-20 sticky right-0 z-40 shadow-[-2px_0_6px_-2px_rgba(20,17,15,0.08)]" />
             </tr>
           </thead>
           <tbody>
             {sortedLeads.map((lead) => {
               const igUser = extractInstagramUsername(lead.redes_sociales)
               return (
-              <tr key={lead.id} className="hover:bg-[#faf8f5]/80 transition-colors group">
-                {columns.map((col) => {
-                  const isEditing =
-                    editing?.id === lead.id && editing?.field === col.key
-                  const cellValue = String(lead[col.key] || '')
+                <tr key={lead.id} className="hover:bg-[#faf8f5]/80 transition-colors group">
+                  {columns.map((col) => {
+                    const isEditing =
+                      editing?.id === lead.id && editing?.field === col.key
+                    const cellValue = String(lead[col.key] || '')
+                    const isNombre = col.key === 'nombre'
 
-                  return (
-                    <td key={col.key} className="table-cell">
-                      {col.key === 'notas' ? (
-                        <NotesCell
-                          value={cellValue}
-                          onSave={(val) => handleSave(lead.id, 'notas', val)}
-                        />
-                      ) : isEditing ? (
-                        col.type === 'select' ? (
-                          <EditableSelect
+                    return (
+                      <td
+                        key={col.key}
+                        className={`table-cell bg-white group-hover:bg-[#faf8f5] ${
+                          isNombre
+                            ? 'sticky left-0 z-20 min-w-[140px] max-w-[180px] sm:min-w-[180px] sm:max-w-[220px] shadow-[2px_0_6px_-2px_rgba(20,17,15,0.12)] font-medium'
+                            : ''
+                        }`}
+                      >
+                        {col.key === 'notas' ? (
+                          <NotesCell
                             value={cellValue}
-                            options={col.options!}
-                            onSave={(val) => handleSave(lead.id, col.key, val)}
-                            onCancel={handleCancel}
-                            allowEmpty={col.key === 'responsable' || col.key === 'relevancia'}
+                            onSave={(val) => handleSave(lead.id, 'notas', val)}
                           />
-                        ) : (
-                          <EditableInput
-                            value={cellValue}
-                            onSave={(val) => handleSave(lead.id, col.key, val)}
-                            onCancel={handleCancel}
-                          />
-                        )
-                      ) : (
-                        <div
-                          className="editable-cell"
-                          onClick={() => startEditing(lead.id, col.key)}
-                        >
-                          {col.key === 'status' ? (
-                            <StatusBadge status={cellValue} />
-                          ) : col.key === 'relevancia' ? (
-                            <RelevanciaBadge relevancia={cellValue} />
-                          ) : col.key === 'redes_sociales' && cellValue ? (
-                            <span className="text-terracota text-sm truncate block max-w-[150px]">
-                              {cellValue}
-                            </span>
+                        ) : isEditing ? (
+                          col.type === 'select' ? (
+                            <EditableSelect
+                              value={cellValue}
+                              options={col.options!}
+                              onSave={(val) => handleSave(lead.id, col.key, val)}
+                              onCancel={handleCancel}
+                              allowEmpty={col.key === 'responsable' || col.key === 'relevancia'}
+                            />
                           ) : (
-                            <span className="text-sm truncate block max-w-[200px]">
-                              {cellValue || <span className="text-muted/40">—</span>}
-                            </span>
-                          )}
+                            <EditableInput
+                              value={cellValue}
+                              onSave={(val) => handleSave(lead.id, col.key, val)}
+                              onCancel={handleCancel}
+                            />
+                          )
+                        ) : (
+                          <div
+                            className="editable-cell"
+                            onClick={() => startEditing(lead.id, col.key)}
+                          >
+                            {col.key === 'status' ? (
+                              <StatusBadge status={cellValue} />
+                            ) : col.key === 'relevancia' ? (
+                              <RelevanciaBadge relevancia={cellValue} />
+                            ) : col.key === 'redes_sociales' && cellValue ? (
+                              <span className="text-terracota text-sm truncate block max-w-[150px]">
+                                {cellValue}
+                              </span>
+                            ) : (
+                              <span
+                                className={`text-sm truncate block ${
+                                  isNombre ? 'max-w-[160px] sm:max-w-[200px]' : 'max-w-[200px]'
+                                }`}
+                              >
+                                {cellValue || <span className="text-muted/40">—</span>}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                    )
+                  })}
+                  <td className="px-2 py-2 w-20 bg-white group-hover:bg-[#faf8f5] sticky right-0 z-20 shadow-[-2px_0_6px_-2px_rgba(20,17,15,0.08)]">
+                    <div className="flex items-center justify-end gap-0.5">
+                      <button
+                        type="button"
+                        onClick={() => setSendLead(lead)}
+                        disabled={!igUser}
+                        className={`p-2 min-w-11 min-h-11 sm:min-w-0 sm:min-h-0 sm:p-1.5 rounded-lg transition-opacity cursor-pointer focus-visible:ring-2 focus-visible:ring-terracota/20 ${
+                          igUser
+                            ? 'opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-terracota hover:bg-terracota/10'
+                            : 'opacity-40 sm:opacity-0 sm:group-hover:opacity-40 text-muted/40 cursor-not-allowed'
+                        }`}
+                        title={igUser ? `Enviar pitch a @${igUser}` : 'Sin Instagram en Redes'}
+                        aria-label={
+                          igUser
+                            ? `Enviar pitch por Instagram a ${lead.nombre}`
+                            : `Sin Instagram para ${lead.nombre}`
+                        }
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                      </button>
+                      {confirmDelete === lead.id ? (
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => { onDelete(lead.id, lead.nombre); setConfirmDelete(null) }}
+                            className="text-[10px] font-bold text-white bg-red-500 hover:bg-red-600 rounded px-1.5 py-0.5 transition-colors cursor-pointer"
+                          >
+                            Sí
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setConfirmDelete(null)}
+                            className="text-[10px] font-bold text-muted bg-canvas hover:bg-line rounded px-1.5 py-0.5 transition-colors cursor-pointer"
+                          >
+                            No
+                          </button>
                         </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDelete(lead.id)}
+                          className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity p-2 min-w-11 min-h-11 sm:min-w-0 sm:min-h-0 sm:p-1.5 text-muted/50 hover:text-red-500 rounded-lg hover:bg-red-50 cursor-pointer"
+                          title="Eliminar lead"
+                          aria-label={`Eliminar ${lead.nombre}`}
+                        >
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                        </button>
                       )}
-                    </td>
-                  )
-                })}
-                <td className="px-2 py-2 w-20">
-                  <div className="flex items-center justify-end gap-0.5">
-                    <button
-                      type="button"
-                      onClick={() => setSendLead(lead)}
-                      disabled={!igUser}
-                      className={`p-1.5 rounded-lg transition-opacity cursor-pointer focus-visible:ring-2 focus-visible:ring-terracota/20 ${
-                        igUser
-                          ? 'opacity-0 group-hover:opacity-100 text-terracota hover:bg-terracota/10'
-                          : 'opacity-0 group-hover:opacity-40 text-muted/40 cursor-not-allowed'
-                      }`}
-                      title={igUser ? `Enviar pitch a @${igUser}` : 'Sin Instagram en Redes'}
-                      aria-label={
-                        igUser
-                          ? `Enviar pitch por Instagram a ${lead.nombre}`
-                          : `Sin Instagram para ${lead.nombre}`
-                      }
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                      </svg>
-                    </button>
-                  {confirmDelete === lead.id ? (
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => { onDelete(lead.id, lead.nombre); setConfirmDelete(null) }}
-                        className="text-[10px] font-bold text-white bg-red-500 hover:bg-red-600 rounded px-1.5 py-0.5 transition-colors cursor-pointer"
-                      >
-                        Sí
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setConfirmDelete(null)}
-                        className="text-[10px] font-bold text-muted bg-canvas hover:bg-line rounded px-1.5 py-0.5 transition-colors cursor-pointer"
-                      >
-                        No
-                      </button>
                     </div>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setConfirmDelete(lead.id)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-muted/50 hover:text-red-500 rounded-lg hover:bg-red-50 cursor-pointer"
-                      title="Eliminar lead"
-                      aria-label={`Eliminar ${lead.nombre}`}
-                    >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                      </svg>
-                    </button>
-                  )}
-                  </div>
-                </td>
-              </tr>
-            )})}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

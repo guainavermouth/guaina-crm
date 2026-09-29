@@ -170,6 +170,7 @@ body {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #d9d1c7 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -215,8 +216,11 @@ body {
 
 .toast {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1.25rem;
+  right: 1rem;
+  left: 1rem;
+  margin-inline: auto;
+  max-width: 22rem;
   background-color: var(--color-ink);
   color: white;
   padding: 0.75rem 1.5rem;
@@ -225,6 +229,15 @@ body {
   font-weight: 600;
   z-index: 100;
   animation: toast-in 0.3s ease, toast-out 0.3s ease 1.7s forwards;
+}
+
+@media (min-width: 640px) {
+  .toast {
+    left: auto;
+    right: 2rem;
+    bottom: 2rem;
+    margin-inline: 0;
+  }
 }
 
 @keyframes toast-in {
